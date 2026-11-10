@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EVCarSpec — Global Electric Vehicle Specifications, Range, Charging & Price Database</title>
-  <meta name="description" content="Explore complete electric vehicle specifications, usable battery capacity, real-world range, DC fast-charging speeds, and multi-country pricing across US, China, Europe, UK, UAE, and India." />
+  <title>EVCarSpec — Global Electric Vehicle (BEV, PHEV, HEV, E-Bike & EV Bus) Specifications Database</title>
+  <meta name="description" content="Compare 500+ Electric Vehicles (BEV, PHEV, HEV), Electric SUVs, Sedans, Pickup Trucks, E-Scooters, EV Bicycles, and Electric Buses by battery capacity, real-world range, charging speed, and global price." />
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Connected directly to your Master EV Database -->
   <script src="/evs-data.js"></script>
@@ -14,7 +14,7 @@
     "@type": "WebSite",
     "name": "EVCarSpec",
     "url": "https://evcarspec.com",
-    "description": "Global Electric Car, SUV, Pickup Truck, and E-Scooter Technical Specifications Database."
+    "description": "Global BEV, PHEV, HEV, Electric Car, SUV, Pickup Truck, E-Scooter, EV Bicycle, and Electric Bus Technical Specifications Database."
   }
   </script>
 </head>
@@ -30,6 +30,7 @@
 
       <nav class="hidden lg:flex space-x-6 text-sm font-medium text-slate-300">
         <a href="#database" class="hover:text-emerald-400 transition">EV Finder</a>
+        <a href="#powertrainSection" class="hover:text-emerald-400 transition">BEV / PHEV / HEV</a>
         <a href="#brands" class="hover:text-emerald-400 transition">Brands</a>
         <a href="#compareSection" class="hover:text-emerald-400 transition">Compare EVs</a>
         <a href="/about/" class="hover:text-emerald-400 transition">About</a>
@@ -51,28 +52,43 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-800 text-white py-12 md:py-16 px-4">
-    <div class="max-w-4xl mx-auto text-center">
+  <!-- Hero Section with Search, Range & Sort By -->
+  <section class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-800 text-white py-10 md:py-14 px-4">
+    <div class="max-w-5xl mx-auto text-center">
+      <div class="inline-flex flex-wrap justify-center gap-2 mb-3">
+        <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold px-3 py-1 rounded-full">Cars & SUVs</span>
+        <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 text-xs font-bold px-3 py-1 rounded-full">BEV • PHEV • HEV</span>
+        <span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold px-3 py-1 rounded-full">Trucks • Buses • E-Scooters • E-Bikes</span>
+      </div>
       <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">
         Compare Electric Vehicles by <span class="text-emerald-400">Real-World Specs & Global Price</span>
       </h1>
-      <p class="text-slate-300 text-base md:text-lg mb-8 max-w-2xl mx-auto">
-        Standardized battery capacities, 10–80% DC fast-charging speeds, motor horsepower, and country-wise pricing for Electric Cars, SUVs, Trucks & E-Scooters.
+      <p class="text-slate-300 text-sm md:text-base mb-8 max-w-3xl mx-auto">
+        Standardized battery capacities, DC fast-charging speeds, motor horsepower, and multi-country prices across Pure Electric (BEV), Plug-in Hybrid (PHEV), Hybrid (HEV), E-Bikes, and Commercial EV Buses.
       </p>
 
-      <!-- Search & Quick Filter Bar -->
-      <div class="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/15 max-w-3xl mx-auto shadow-xl">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <!-- Search, Range Filter & Sort Bar -->
+      <div class="bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/15 max-w-4xl mx-auto shadow-xl">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
           <div class="md:col-span-2">
-            <input id="searchInput" oninput="renderVehicles()" type="text" placeholder="🔍 Search any EV model or brand (e.g. Model Y, BYD Seal, Kia EV9, Porsche, Ola)..." class="w-full px-4 py-3 rounded-xl bg-white text-slate-900 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+            <input id="searchInput" oninput="resetPaginationAndRender()" type="text" placeholder="🔍 Search model, brand or type (e.g. Model Y, BYD, Bus, Bicycle, PHEV)..." class="w-full px-4 py-3 rounded-xl bg-white text-slate-900 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400" />
           </div>
           <div>
-            <select id="rangeFilter" onchange="renderVehicles()" class="w-full px-4 py-3 rounded-xl bg-slate-800 text-white font-semibold text-sm border border-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-400">
-              <option value="0">🔋 Any Range (All EVs)</option>
-              <option value="300">300+ km Range</option>
-              <option value="450">450+ km Range</option>
-              <option value="550">550+ km Long Range</option>
+            <select id="rangeFilter" onchange="resetPaginationAndRender()" class="w-full px-3.5 py-3 rounded-xl bg-slate-800 text-white font-semibold text-sm border border-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-400 cursor-pointer">
+              <option value="0">🔋 Any Range (All)</option>
+              <option value="100">100+ km (Bikes/City)</option>
+              <option value="350">350+ km Range</option>
+              <option value="500">500+ km Long Range</option>
+              <option value="650">650+ km Ultra Range</option>
+            </select>
+          </div>
+          <div>
+            <select id="sortSelect" onchange="resetPaginationAndRender()" class="w-full px-3.5 py-3 rounded-xl bg-slate-800 text-emerald-300 font-bold text-sm border border-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-400 cursor-pointer">
+              <option value="default">✨ Sort: Featured EVs</option>
+              <option value="range-desc">🛣️ Longest Range First</option>
+              <option value="battery-desc">🔋 Largest Battery (kWh)</option>
+              <option value="accel-asc">🚀 Fastest 0–100 km/h</option>
+              <option value="price-asc">💰 Lowest US Price First</option>
             </select>
           </div>
         </div>
@@ -80,35 +96,100 @@
     </div>
   </section>
 
-  <!-- Browse by Brand Pills -->
-  <section id="brands" class="max-w-7xl mx-auto px-4 pt-10 pb-4">
-    <div class="flex items-center justify-between mb-3">
-      <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500">Filter by Manufacturer</h2>
-      <button onclick="resetAllFilters()" class="text-xs text-emerald-600 font-bold hover:underline">Reset All Filters</button>
+  <!-- 1. Powertrain Type Filter (BEV / PHEV / HEV) -->
+  <section id="powertrainSection" class="max-w-7xl mx-auto px-4 pt-8 pb-2">
+    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+        <div>
+          <h2 class="text-xs font-extrabold uppercase tracking-wider text-slate-500">1. Select Powertrain Technology (BEV / PHEV / HEV)</h2>
+        </div>
+        <button onclick="resetAllFilters()" class="text-xs text-emerald-600 font-bold hover:underline self-start sm:self-auto">Reset All Filters ↺</button>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5" id="powertrainTabs">
+        <button onclick="setPowertrain('All')" data-pt="All" class="pt-btn bg-slate-900 text-white p-3 rounded-xl text-left transition border border-slate-900">
+          <span class="block text-xs font-extrabold uppercase text-emerald-400">⚡ All Types</span>
+          <span class="text-xs opacity-80">BEV + PHEV + HEV</span>
+        </button>
+        <button onclick="setPowertrain('BEV')" data-pt="BEV" class="pt-btn bg-slate-50 hover:bg-emerald-50 text-slate-800 p-3 rounded-xl text-left transition border border-slate-200">
+          <span class="block text-xs font-extrabold uppercase text-emerald-700">🔋 BEV (Pure Electric)</span>
+          <span class="text-xs text-slate-500">100% Battery Only</span>
+        </button>
+        <button onclick="setPowertrain('PHEV')" data-pt="PHEV" class="pt-btn bg-slate-50 hover:bg-blue-50 text-slate-800 p-3 rounded-xl text-left transition border border-slate-200">
+          <span class="block text-xs font-extrabold uppercase text-blue-700">🔌 PHEV / EREV</span>
+          <span class="text-xs text-slate-500">Plug-in Hybrid + Engine</span>
+        </button>
+        <button onclick="setPowertrain('HEV')" data-pt="HEV" class="pt-btn bg-slate-50 hover:bg-amber-50 text-slate-800 p-3 rounded-xl text-left transition border border-slate-200">
+          <span class="block text-xs font-extrabold uppercase text-amber-700">♻️ HEV (Hybrid)</span>
+          <span class="text-xs text-slate-500">Self-Charging Hybrid</span>
+        </button>
+      </div>
     </div>
-    <div id="brandContainer" class="flex flex-wrap gap-2"></div>
   </section>
 
-  <!-- Vehicle Category Tabs -->
+  <!-- 2. Browse by Manufacturer (Brand Pills) -->
+  <section id="brands" class="max-w-7xl mx-auto px-4 pt-4 pb-2">
+    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+      <h2 class="text-xs font-extrabold uppercase tracking-wider text-slate-500 mb-2.5">2. Filter by Manufacturer / Brand</h2>
+      <div id="brandContainer" class="flex flex-wrap gap-1.5"></div>
+    </div>
+  </section>
+
+  <!-- 3. Vehicle Body Category Tabs (Includes EV Bus & EV Bicycle) + Quick Spec Pills -->
   <section id="database" class="max-w-7xl mx-auto px-4 py-4">
-    <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
-      <div class="flex flex-wrap gap-2" id="categoryTabs">
-        <button onclick="setCategory('All')" data-cat="All" class="cat-btn bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-bold transition">All EVs</button>
-        <button onclick="setCategory('SUV')" data-cat="SUV" class="cat-btn bg-white text-slate-700 border border-slate-200 hover:border-emerald-500 px-4 py-2 rounded-xl text-sm font-bold transition">🚙 Electric SUVs</button>
-        <button onclick="setCategory('Sedan')" data-cat="Sedan" class="cat-btn bg-white text-slate-700 border border-slate-200 hover:border-emerald-500 px-4 py-2 rounded-xl text-sm font-bold transition">🚗 Electric Sedans</button>
-        <button onclick="setCategory('Hatchback')" data-cat="Hatchback" class="cat-btn bg-white text-slate-700 border border-slate-200 hover:border-emerald-500 px-4 py-2 rounded-xl text-sm font-bold transition">🚘 Compact / Hatch</button>
-        <button onclick="setCategory('Truck')" data-cat="Truck" class="cat-btn bg-white text-slate-700 border border-slate-200 hover:border-emerald-500 px-4 py-2 rounded-xl text-sm font-bold transition">🛻 Pickup Trucks</button>
-        <button onclick="setCategory('Scooter')" data-cat="Scooter" class="cat-btn bg-white text-slate-700 border border-slate-200 hover:border-emerald-500 px-4 py-2 rounded-xl text-sm font-bold transition">🛵 E-Scooters & Bikes</button>
+    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+      <div>
+        <h2 class="text-xs font-extrabold uppercase tracking-wider text-slate-500 mb-2.5">3. Select Vehicle Category</h2>
+        <div class="flex flex-wrap gap-2" id="categoryTabs">
+          <button onclick="setCategory('All')" data-cat="All" class="cat-btn bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">All Categories</button>
+          <button onclick="setCategory('SUV')" data-cat="SUV" class="cat-btn bg-slate-50 text-slate-700 border border-slate-200 hover:border-emerald-500 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">🚙 Electric SUVs</button>
+          <button onclick="setCategory('Sedan')" data-cat="Sedan" class="cat-btn bg-slate-50 text-slate-700 border border-slate-200 hover:border-emerald-500 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">🚗 Electric Sedans</button>
+          <button onclick="setCategory('Hatchback')" data-cat="Hatchback" class="cat-btn bg-slate-50 text-slate-700 border border-slate-200 hover:border-emerald-500 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">🚘 Compact / Hatch</button>
+          <button onclick="setCategory('Truck')" data-cat="Truck" class="cat-btn bg-slate-50 text-slate-700 border border-slate-200 hover:border-emerald-500 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">🛻 Pickup Trucks</button>
+          <button onclick="setCategory('Scooter')" data-cat="Scooter" class="cat-btn bg-slate-50 text-slate-700 border border-slate-200 hover:border-emerald-500 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">🛵 E-Scooters & Bikes</button>
+          <button onclick="setCategory('Bicycle')" data-cat="Bicycle" class="cat-btn bg-slate-50 text-slate-700 border border-slate-200 hover:border-emerald-500 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">🚲 EV Bicycles</button>
+          <button onclick="setCategory('Bus')" data-cat="Bus" class="cat-btn bg-slate-50 text-slate-700 border border-slate-200 hover:border-emerald-500 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition">🚌 EV Buses & Vans</button>
+        </div>
       </div>
-      <div class="text-sm text-slate-500 font-medium">
-        Showing <span id="resultCount" class="font-bold text-slate-900">0</span> Electric Vehicles
+
+      <!-- Quick Technical Spec Filters (800V, AWD, 7-Seater) -->
+      <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-2" id="specFilterTabs">
+          <span class="text-xs font-bold text-slate-400 mr-1">Quick Specs:</span>
+          <button onclick="setSpecFilter('All')" data-spec="All" class="spec-btn bg-emerald-600 text-white px-3 py-1 rounded-lg text-xs font-bold transition">All Specs</button>
+          <button onclick="setSpecFilter('800V')" data-spec="800V" class="spec-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1 rounded-lg text-xs font-bold transition">⚡ 800V+ Ultra-Fast</button>
+          <button onclick="setSpecFilter('AWD')" data-spec="AWD" class="spec-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1 rounded-lg text-xs font-bold transition">🛞 AWD / Dual-Motor</button>
+          <button onclick="setSpecFilter('Family')" data-spec="Family" class="spec-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1 rounded-lg text-xs font-bold transition">👨‍👩‍👧‍👦 6/7-Seater & Buses</button>
+        </div>
+        <div class="text-xs sm:text-sm text-slate-500 font-medium">
+          Showing <span id="showingCount" class="font-extrabold text-slate-900">0</span> of <span id="resultCount" class="font-extrabold text-emerald-600">0</span> Matching EVs
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- Active Filter Indicator Banner -->
+  <div id="activeFilterBar" class="hidden max-w-7xl mx-auto px-4 pb-4">
+    <div class="bg-emerald-50 border border-emerald-200 text-emerald-900 px-4 py-2.5 rounded-xl flex flex-wrap items-center justify-between gap-2 text-sm">
+      <span id="activeFilterText" class="font-semibold">Showing Filtered EVs</span>
+      <button onclick="resetAllFilters()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3.5 py-1.5 rounded-lg transition">Show All EVs ✕</button>
+    </div>
+  </div>
 
   <!-- Main EV Cards Grid -->
   <section class="max-w-7xl mx-auto px-4 pb-14">
     <div id="carGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+    <!-- Smart Pagination: Load More Button (Prevents Homepage Overload with 500+ EVs) -->
+    <div id="loadMoreContainer" class="hidden mt-10 text-center">
+      <div class="inline-flex flex-col sm:flex-row items-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+        <button id="loadMoreBtn" onclick="loadMoreVehicles()" class="bg-slate-900 hover:bg-emerald-600 text-white font-extrabold px-8 py-3.5 rounded-xl text-sm transition shadow-md">
+          Load More EVs (+12 More) ↓
+        </button>
+        <button onclick="showAllMatchingVehicles()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-5 py-3.5 rounded-xl text-xs transition">
+          View All Matching at Once
+        </button>
+      </div>
+    </div>
   </section>
 
   <!-- Interactive Side-by-Side Comparison Tool Section -->
@@ -117,16 +198,16 @@
       <div class="mb-6">
         <span class="text-xs uppercase tracking-wider text-emerald-400 font-bold">Interactive Tool</span>
         <h2 class="text-2xl font-extrabold">⚖️ Side-by-Side EV Spec Comparison</h2>
-        <p class="text-slate-400 text-sm">Select any two electric vehicles below (or click "+ Compare" on any card above) to compare battery, charging, and prices.</p>
+        <p class="text-slate-400 text-sm">Select any two vehicles below (or click "+ Compare" on any card above) to compare battery, range, charging, and global prices.</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <div>
-          <label class="block text-xs text-slate-400 mb-1">Select First EV</label>
+          <label class="block text-xs text-slate-400 mb-1">Select First Vehicle</label>
           <select id="compCar1" onchange="renderComparison()" class="w-full bg-slate-800 text-white p-3 rounded-xl border border-slate-700 font-semibold text-sm"></select>
         </div>
         <div>
-          <label class="block text-xs text-slate-400 mb-1">Select Second EV</label>
+          <label class="block text-xs text-slate-400 mb-1">Select Second Vehicle</label>
           <select id="compCar2" onchange="renderComparison()" class="w-full bg-slate-800 text-white p-3 rounded-xl border border-slate-700 font-semibold text-sm"></select>
         </div>
       </div>
@@ -146,22 +227,26 @@
     </div>
   </section>
 
-  <!-- Editorial Guide -->
+  <!-- Editorial Guide (Includes BEV vs PHEV vs HEV for SEO & AdSense Value) -->
   <section id="methodology" class="bg-white border-t border-slate-200 py-14 px-4">
-    <div class="max-w-5xl mx-auto">
-      <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-6 text-center">Understanding Electric Vehicle Specifications & Global Standards</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-slate-600 leading-relaxed">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-6 text-center">Understanding Electric Vehicle Powertrains & Global Standards</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-sm text-slate-600 leading-relaxed">
         <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-          <h3 class="text-base font-bold text-slate-900 mb-2">🔋 Gross vs. Usable Battery (kWh)</h3>
-          <p>Every electric vehicle battery has a total (gross) capacity and a usable buffer. Manufacturers lock 3% to 8% of the pack to prevent deep discharge and prolong battery health. EVCarSpec lists both figures alongside battery chemistry—such as durable <strong>LFP</strong> and high-energy-density <strong>NMC</strong>.</p>
+          <h3 class="text-base font-bold text-slate-900 mb-2">🔋 BEV vs. 🔌 PHEV vs. ♻️ HEV</h3>
+          <p><strong>BEVs (Battery Electric Vehicles)</strong> run exclusively on battery power with zero tailpipe emissions. <strong>PHEVs (Plug-in Hybrids)</strong> combine a rechargeable battery (50–120 km electric range) with a combustion engine for long trips. <strong>HEVs (Self-Charging Hybrids)</strong> recharge their compact battery automatically via regenerative braking.</p>
         </div>
         <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-          <h3 class="text-base font-bold text-slate-900 mb-2">🛣️ WLTP vs. EPA vs. Real-World Range</h3>
-          <p>Official driving range varies by testing cycle: the US <strong>EPA</strong> cycle is the most conservative, Europe's <strong>WLTP</strong> is approximately 10–15% more optimistic, and China's <strong>CLTC</strong> / India's <strong>MIDC</strong> cycles favor city speeds. Check our real-world highway range before planning road trips.</p>
+          <h3 class="text-base font-bold text-slate-900 mb-2">🧪 LFP vs. NMC Battery Chemistry</h3>
+          <p>Every EV battery has a gross and usable capacity (kWh). <strong>LFP (Lithium Iron Phosphate)</strong> packs tolerate daily 100% charging and offer exceptional cycle life, while <strong>NMC (Nickel Manganese Cobalt)</strong> cells deliver higher energy density for long-range flagship EVs and cold-weather performance.</p>
+        </div>
+        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+          <h3 class="text-base font-bold text-slate-900 mb-2">🛣️ WLTP vs. EPA vs. Real-World</h3>
+          <p>Official range varies by regional test cycle: the US <strong>EPA</strong> standard closely reflects highway speeds, Europe's <strong>WLTP</strong> reads 10–15% higher, and China's <strong>CLTC</strong> / India's <strong>MIDC</strong> favor urban traffic. Always check our real-world highway range before planning long trips.</p>
         </div>
         <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
           <h3 class="text-base font-bold text-slate-900 mb-2">⚡ 400V vs. 800V Fast Charging</h3>
-          <p>Vehicles built on <strong>800V architectures</strong> can accept 240–350 kW DC fast charging, replenishing 10% to 80% in under 18 minutes. Standard 400V EVs typically take 25 to 35 minutes on high-power DC chargers.</p>
+          <p>Cars built on <strong>800V+ architectures</strong> accept 240–420 kW DC fast charging, replenishing 10% to 80% in 12 to 18 minutes. Commercial <strong>EV Buses</strong> use dual-gun CCS2/Pantograph charging up to 350 kW, while <strong>EV Bicycles</strong> use removable 36V/48V lithium packs.</p>
         </div>
       </div>
     </div>
@@ -185,8 +270,46 @@
 
   <script>
     const evDatabase = window.EV_DATABASE || [];
+    const PAGE_STEP = 12;
+
     let activeCategory = "All";
     let activeBrand = "All";
+    let activePowertrain = "All";
+    let activeSpec = "All";
+    let visibleLimit = PAGE_STEP;
+
+    // Safely reads BEV / PHEV / HEV (defaults to BEV for existing entries)
+    function getPowertrain(car) {
+      return (car.powertrain || "BEV").toUpperCase();
+    }
+
+    function parseAccelNumber(str) {
+      if (!str) return 999;
+      const m = String(str).match(/(\d+(\.\d+)?)/);
+      return m ? parseFloat(m[1]) : 999;
+    }
+
+    function parsePriceNumber(str) {
+      if (!str) return 9999999;
+      const clean = String(str).replace(/,/g, '');
+      const m = clean.match(/(\d+(\.\d+)?)/);
+      return m ? parseFloat(m[1]) : 9999999;
+    }
+
+    function matchesSpecFilter(car, spec) {
+      if (spec === "All") return true;
+      if (spec === "800V") {
+        return /800|900|926/i.test(car.architecture || "");
+      }
+      if (spec === "AWD") {
+        return /AWD|4WD|quattro|4MATIC|Dual|Tri|Quad/i.test(car.drive || "");
+      }
+      if (spec === "Family") {
+        const text = `${car.name} ${car.bootSpace} ${car.verdict} ${car.category}`;
+        return /7-Seat|6-Seat|3-Row|Bus|Van|LWB/i.test(text) || car.category === "Bus";
+      }
+      return true;
+    }
 
     function initApp() {
       renderBrandPills();
@@ -195,12 +318,33 @@
       renderComparison();
     }
 
+    function resetPaginationAndRender() {
+      visibleLimit = PAGE_STEP;
+      renderVehicles();
+    }
+
+    function loadMoreVehicles() {
+      visibleLimit += PAGE_STEP;
+      renderVehicles();
+    }
+
+    function showAllMatchingVehicles() {
+      visibleLimit = 99999;
+      renderVehicles();
+    }
+
     function resetAllFilters() {
       activeCategory = "All";
       activeBrand = "All";
+      activePowertrain = "All";
+      activeSpec = "All";
+      visibleLimit = PAGE_STEP;
       document.getElementById("searchInput").value = "";
       document.getElementById("rangeFilter").value = "0";
-      setCategory("All");
+      document.getElementById("sortSelect").value = "default";
+      updateCategoryButtonsUI();
+      updatePowertrainButtonsUI();
+      updateSpecButtonsUI();
       renderBrandPills();
       renderVehicles();
     }
@@ -208,90 +352,241 @@
     function renderBrandPills() {
       const brands = ["All", ...new Set(evDatabase.map(c => c.brand))];
       const container = document.getElementById("brandContainer");
-      container.innerHTML = brands.map(b => `
-        <button onclick="setBrand('${b}')" class="px-3.5 py-1.5 rounded-full text-xs font-bold transition border ${activeBrand === b ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-slate-700 border-slate-200 hover:border-emerald-500'}">
-          ${b === 'All' ? 'All Brands (' + evDatabase.length + ')' : b}
-        </button>
-      `).join('');
+      container.innerHTML = brands.map(b => {
+        const count = b === "All" ? evDatabase.length : evDatabase.filter(c => c.brand === b).length;
+        return `
+          <button onclick="setBrand('${b}')" class="px-3 py-1.5 rounded-full text-xs font-bold transition border ${activeBrand === b ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm' : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-emerald-500'}">
+            ${b === 'All' ? 'All Brands (' + count + ')' : b + ' (' + count + ')'}
+          </button>
+        `;
+      }).join('');
     }
 
     function setBrand(brand) {
       activeBrand = brand;
+      visibleLimit = PAGE_STEP;
       renderBrandPills();
+      renderVehicles();
+    }
+
+    function setPowertrain(pt) {
+      activePowertrain = pt;
+      visibleLimit = PAGE_STEP;
+      updatePowertrainButtonsUI();
       renderVehicles();
     }
 
     function setCategory(cat) {
       activeCategory = cat;
-      document.querySelectorAll('.cat-btn').forEach(btn => {
-        if (btn.getAttribute('data-cat') === cat) {
-          btn.className = "cat-btn bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-bold transition";
-        } else {
-          btn.className = "cat-btn bg-white text-slate-700 border border-slate-200 hover:border-emerald-500 px-4 py-2 rounded-xl text-sm font-bold transition";
-        }
-      });
+      visibleLimit = PAGE_STEP;
+      updateCategoryButtonsUI();
       renderVehicles();
     }
 
+    function setSpecFilter(spec) {
+      activeSpec = spec;
+      visibleLimit = PAGE_STEP;
+      updateSpecButtonsUI();
+      renderVehicles();
+    }
+
+    // Card Header Click Handlers
+    function clickCardBrand(event, brand) {
+      event.stopPropagation();
+      activeBrand = brand;
+      activeCategory = "All";
+      visibleLimit = PAGE_STEP;
+      updateCategoryButtonsUI();
+      renderBrandPills();
+      renderVehicles();
+      document.getElementById("database").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function clickCardCategory(event, cat) {
+      event.stopPropagation();
+      activeCategory = cat;
+      activeBrand = "All";
+      visibleLimit = PAGE_STEP;
+      updateCategoryButtonsUI();
+      renderBrandPills();
+      renderVehicles();
+      document.getElementById("database").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function clickCardPowertrain(event, pt) {
+      event.stopPropagation();
+      activePowertrain = pt;
+      visibleLimit = PAGE_STEP;
+      updatePowertrainButtonsUI();
+      renderVehicles();
+      document.getElementById("powertrainSection").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function updatePowertrainButtonsUI() {
+      document.querySelectorAll('.pt-btn').forEach(btn => {
+        if (btn.getAttribute('data-pt') === activePowertrain) {
+          btn.className = "pt-btn bg-slate-900 text-white p-3 rounded-xl text-left transition border border-slate-900 shadow-sm";
+        } else {
+          btn.className = "pt-btn bg-slate-50 hover:bg-emerald-50 text-slate-800 p-3 rounded-xl text-left transition border border-slate-200";
+        }
+      });
+    }
+
+    function updateCategoryButtonsUI() {
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        if (btn.getAttribute('data-cat') === activeCategory) {
+          btn.className = "cat-btn bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition shadow-sm";
+        } else {
+          btn.className = "cat-btn bg-slate-50 text-slate-700 border border-slate-200 hover:border-emerald-500 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition";
+        }
+      });
+    }
+
+    function updateSpecButtonsUI() {
+      document.querySelectorAll('.spec-btn').forEach(btn => {
+        if (btn.getAttribute('data-spec') === activeSpec) {
+          btn.className = "spec-btn bg-emerald-600 text-white px-3 py-1 rounded-lg text-xs font-bold transition";
+        } else {
+          btn.className = "spec-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-3 py-1 rounded-lg text-xs font-bold transition";
+        }
+      });
+    }
+
     function renderVehicles() {
-      const search = document.getElementById("searchInput").value.toLowerCase();
+      const search = document.getElementById("searchInput").value.toLowerCase().trim();
       const minRange = parseInt(document.getElementById("rangeFilter").value) || 0;
+      const sortBy = document.getElementById("sortSelect").value;
       const region = document.getElementById("regionSelect").value;
 
-      const filtered = evDatabase.filter(car => {
-        const matchCat = activeCategory === "All" || car.category === activeCategory;
-        const matchBrand = activeBrand === "All" || car.brand === activeBrand;
-        const matchSearch = car.name.toLowerCase().includes(search) || car.brand.toLowerCase().includes(search) || car.category.toLowerCase().includes(search);
-        const matchRange = car.rangeKm >= minRange;
-        return matchCat && matchBrand && matchSearch && matchRange;
+      let filtered = evDatabase.filter(car => {
+        const pt = getPowertrain(car);
+        const matchCat = activeCategory === "All" || car.category.toLowerCase() === activeCategory.toLowerCase();
+        const matchBrand = activeBrand === "All" || car.brand.toLowerCase() === activeBrand.toLowerCase();
+        const matchPt = activePowertrain === "All" || pt === activePowertrain;
+        const matchSpec = matchesSpecFilter(car, activeSpec);
+        const matchRange = (car.rangeKm || 0) >= minRange;
+        const searchableText = `${car.name} ${car.brand} ${car.category} ${pt} ${car.chemistry} ${car.verdict}`.toLowerCase();
+        const matchSearch = !search || searchableText.includes(search);
+        return matchCat && matchBrand && matchPt && matchSpec && matchRange && matchSearch;
       });
 
-      document.getElementById("resultCount").innerText = filtered.length;
+      // Apply Sorting
+      if (sortBy === "range-desc") {
+        filtered.sort((a, b) => (b.rangeKm || 0) - (a.rangeKm || 0));
+      } else if (sortBy === "battery-desc") {
+        filtered.sort((a, b) => (b.usableKwh || 0) - (a.usableKwh || 0));
+      } else if (sortBy === "accel-asc") {
+        filtered.sort((a, b) => parseAccelNumber(a.accel) - parseAccelNumber(b.accel));
+      } else if (sortBy === "price-asc") {
+        filtered.sort((a, b) => parsePriceNumber(a.prices?.us) - parsePriceNumber(b.prices?.us));
+      }
+
+      const totalMatching = filtered.length;
+      const visibleItems = filtered.slice(0, visibleLimit);
+
+      document.getElementById("resultCount").innerText = totalMatching;
+      document.getElementById("showingCount").innerText = visibleItems.length;
+
+      // Active Filter Status Bar
+      const filterBar = document.getElementById("activeFilterBar");
+      const filterText = document.getElementById("activeFilterText");
+      const activeParts = [];
+      if (activePowertrain !== "All") activeParts.push(`Powertrain: ${activePowertrain}`);
+      if (activeBrand !== "All") activeParts.push(`Brand: ${activeBrand}`);
+      if (activeCategory !== "All") activeParts.push(`Category: ${activeCategory}`);
+      if (activeSpec !== "All") activeParts.push(`Spec: ${activeSpec}`);
+      if (minRange > 0) activeParts.push(`Min Range: ${minRange} km`);
+      if (search) activeParts.push(`Search: "${search}"`);
+
+      if (activeParts.length > 0) {
+        filterBar.classList.remove("hidden");
+        filterText.innerText = `Active Filters (${totalMatching} results) — ${activeParts.join("  •  ")}`;
+      } else {
+        filterBar.classList.add("hidden");
+      }
+
+      // Load More Button Visibility
+      const loadMoreContainer = document.getElementById("loadMoreContainer");
+      const loadMoreBtn = document.getElementById("loadMoreBtn");
+      if (totalMatching > visibleLimit) {
+        const remaining = totalMatching - visibleLimit;
+        loadMoreContainer.classList.remove("hidden");
+        loadMoreBtn.innerText = `Load More EVs (+${Math.min(PAGE_STEP, remaining)} More) — ${remaining} Remaining ↓`;
+      } else {
+        loadMoreContainer.classList.add("hidden");
+      }
 
       const grid = document.getElementById("carGrid");
-      if (filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-full bg-white p-10 rounded-2xl text-center border border-slate-200 text-slate-500">No electric vehicles match your current filter. Click "Reset All Filters" to view all models.</div>`;
+      if (totalMatching === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full bg-white p-10 rounded-2xl text-center border border-slate-200">
+            <p class="text-slate-600 font-semibold mb-3">No vehicles match your current filter combination.</p>
+            <button onclick="resetAllFilters()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition">Reset All Filters</button>
+          </div>
+        `;
         return;
       }
 
-      grid.innerHTML = filtered.map(car => `
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition flex flex-col justify-between">
-          <div>
-            <div class="bg-slate-900 text-white px-5 py-4 flex justify-between items-start">
-              <div>
-                <span class="text-xs uppercase tracking-wider text-emerald-400 font-bold">${car.brand}</span>
-                <h3 class="text-lg font-extrabold leading-snug">${car.name}</h3>
+      grid.innerHTML = visibleItems.map(car => {
+        const pt = getPowertrain(car);
+        const ptBadgeColor = pt === "PHEV"
+          ? "bg-blue-500/25 text-blue-300 border-blue-400/40"
+          : pt === "HEV"
+          ? "bg-amber-500/25 text-amber-300 border-amber-400/40"
+          : "bg-emerald-500/20 text-emerald-300 border-emerald-400/30";
+
+        return `
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition flex flex-col justify-between">
+            <div>
+              <!-- CLICKABLE BLACK HEADER BAR -->
+              <div onclick="window.location.href='/${car.slug}/'" class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-4 flex justify-between items-start cursor-pointer group transition" title="Open ${car.name} Full Specifications">
+                <div class="pr-2">
+                  <button type="button" onclick="clickCardBrand(event, '${car.brand}')" class="text-xs uppercase tracking-wider text-emerald-400 hover:text-emerald-300 hover:underline font-bold block text-left" title="Filter by ${car.brand}">
+                    ${car.brand} ↗
+                  </button>
+                  <a href="/${car.slug}/" onclick="event.stopPropagation()" class="text-lg font-extrabold leading-snug group-hover:text-emerald-400 transition block mt-0.5">
+                    ${car.name}
+                  </a>
+                </div>
+                <div class="flex flex-col items-end gap-1.5 shrink-0">
+                  <button type="button" onclick="clickCardCategory(event, '${car.category}')" class="bg-emerald-500/20 hover:bg-emerald-500 hover:text-slate-950 text-emerald-300 text-xs font-bold px-2.5 py-0.5 rounded-full transition" title="View all ${car.category}">
+                    ${car.category}
+                  </button>
+                  <button type="button" onclick="clickCardPowertrain(event, '${pt}')" class="${ptBadgeColor} border hover:bg-white hover:text-slate-900 text-[11px] font-extrabold px-2 py-0.5 rounded-md transition" title="Filter by ${pt}">
+                    ${pt}
+                  </button>
+                </div>
               </div>
-              <span class="bg-emerald-500/20 text-emerald-300 text-xs font-bold px-2.5 py-1 rounded-full">${car.category}</span>
+
+              <div class="p-5 space-y-2.5 text-sm">
+                <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Battery Pack:</span><span class="font-semibold text-right">${car.battery}</span></div>
+                <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Official Range:</span><span class="font-bold text-emerald-600 text-right">${car.rangeText}</span></div>
+                <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Charging:</span><span class="font-semibold text-right">${car.dcChargeKw} (${car.dcChargeTime})</span></div>
+                <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Power / Drive:</span><span class="font-semibold text-right">${car.power} (${car.drive})</span></div>
+                <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Acceleration:</span><span class="font-semibold text-right">${car.accel}</span></div>
+                <div class="flex justify-between pt-1 items-center">
+                  <span class="text-slate-500 font-medium">Market Price:</span>
+                  <span class="text-base font-extrabold text-slate-900 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">${car.prices[region]}</span>
+                </div>
+              </div>
             </div>
-            <div class="p-5 space-y-2.5 text-sm">
-              <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Battery Pack:</span><span class="font-semibold text-right">${car.battery}</span></div>
-              <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Official Range:</span><span class="font-bold text-emerald-600 text-right">${car.rangeText}</span></div>
-              <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">DC Fast Charge:</span><span class="font-semibold text-right">${car.dcChargeKw} (${car.dcChargeTime})</span></div>
-              <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Motor Power:</span><span class="font-semibold text-right">${car.power}</span></div>
-              <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Acceleration:</span><span class="font-semibold text-right">${car.accel}</span></div>
-              <div class="flex justify-between pt-1 items-center">
-                <span class="text-slate-500 font-medium">Market Price:</span>
-                <span class="text-base font-extrabold text-slate-900 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">${car.prices[region]}</span>
-              </div>
+            <div class="px-5 pb-5 pt-2 flex gap-2">
+              <a href="/${car.slug}/" class="flex-1 text-center bg-slate-900 hover:bg-emerald-600 text-white font-semibold py-2.5 px-3 rounded-xl text-sm transition">
+                Full Specs & Calc →
+              </a>
+              <button onclick="selectForCompare('${car.slug}')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-3 rounded-xl text-xs transition">
+                + Compare
+              </button>
             </div>
           </div>
-          <div class="px-5 pb-5 pt-2 flex gap-2">
-            <a href="/${car.slug}/" class="flex-1 text-center bg-slate-900 hover:bg-emerald-600 text-white font-semibold py-2.5 px-3 rounded-xl text-sm transition">
-              Full Specs & Calc →
-            </a>
-            <button onclick="selectForCompare('${car.slug}')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-3 rounded-xl text-xs transition">
-              + Compare
-            </button>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function populateCompareDropdowns() {
       const sel1 = document.getElementById("compCar1");
       const sel2 = document.getElementById("compCar2");
-      const options = evDatabase.map(c => `<option value="${c.slug}">${c.name}</option>`).join('');
+      const options = evDatabase.map(c => `<option value="${c.slug}">${c.name} (${getPowertrain(c)})</option>`).join('');
       sel1.innerHTML = options;
       sel2.innerHTML = options;
       if (evDatabase.length > 1) sel2.selectedIndex = 1;
@@ -316,16 +611,16 @@
       const c2 = evDatabase.find(c => c.slug === s2) || evDatabase[1] || evDatabase[0];
       const region = document.getElementById("regionSelect").value;
 
-      document.getElementById("compHead1").innerText = c1.name;
-      document.getElementById("compHead2").innerText = c2.name;
+      document.getElementById("compHead1").innerHTML = `<a href="/${c1.slug}/" class="hover:underline">${c1.name} →</a>`;
+      document.getElementById("compHead2").innerHTML = `<a href="/${c2.slug}/" class="hover:underline">${c2.name} →</a>`;
 
       const rows = [
-        ["Vehicle Category", c1.category, c2.category],
+        ["Category & Powertrain", `${c1.category} (${getPowertrain(c1)})`, `${c2.category} (${getPowertrain(c2)})`],
         ["Battery Capacity", c1.battery, c2.battery],
         ["Official Range", c1.rangeText, c2.rangeText],
         ["Real-World Range", c1.realRange, c2.realRange],
-        ["DC Fast Charging", `${c1.dcChargeKw} (${c1.dcChargeTime})`, `${c2.dcChargeKw} (${c2.dcChargeTime})`],
-        ["Motor Power", c1.power, c2.power],
+        ["Charging Speed", `${c1.dcChargeKw} (${c1.dcChargeTime})`, `${c2.dcChargeKw} (${c2.dcChargeTime})`],
+        ["Motor Power & Drive", `${c1.power} (${c1.drive})`, `${c2.power} (${c2.drive})`],
         ["Acceleration", c1.accel, c2.accel],
         ["Selected Market Price", c1.prices[region], c2.prices[region]]
       ];
