@@ -1,0 +1,35 @@
+name: Auto-Update Homepage & Sitemap on New EV
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'ev/**.html'
+      - 'scripts/update-site.js'
+
+permissions:
+  contents: write
+
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Auto-Updater Script
+        run: node scripts/update-site.js
+
+      - name: Commit and Push Updated index.html & sitemap.xml
+        run: |
+          git config --global user.name "EVCarSpec AutoBot"
+          git config --global user.email "bot@evcarspec.com"
+          git add index.html sitemap.xml
+          git diff --staged --quiet || git commit -m "Auto-update Homepage cards and Sitemap"
+          git push
