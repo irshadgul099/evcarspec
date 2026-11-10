@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Main Home & Static Pages -->
+  <url>
+    <loc>https://evcarspec.com/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://evcarspec.com/about/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://evcarspec.com/contact/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://evcarspec.com/privacy-policy/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://evcarspec.com/terms/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Electric Buses & Commercial Vans -->
+  <url><loc>https://evcarspec.com/byd/k9-electric-bus/</loc><priority>0.8</priority></url>
+  <url><loc>https://evcarspec.com/yutong/e12-electric-bus/</loc><priority>0.8</priority></url>
+  <url><loc>https://evcarspec.com/volvo/7900-electric-bus/</loc><priority>0.8</priority></url>
+  <url><loc>https://evcarspec.com/tata/ultra-9m-electric-bus/</loc><priority>0.8</priority></url>
+  <url><loc>https://evcarspec.com/ford/e-transit-van/</loc><priority>0.8</priority></url>
+
+  <!-- Electric Bicycles (E-Bikes) -->
+  <url><loc>https://evcarspec.com/specialized/turbo-vado-4/</loc><priority>0.8</priority></url>
+  <url><loc>https://evcarspec.com/trek/allant-plus-8s/</loc><priority>0.8</priority></url>
+  <url><loc>https://evcarspec.com/rad-power/radrover-6-plus/</loc><priority>0.8</priority></url>
+  <url><loc>https://evcarspec.com/xiaomi/qicycle-ef1/</loc><priority>0.8</priority></url>
+
+  <!-- Plug-in Hybrids (PHEV) & Hybrids (HEV) -->
+  <url><loc>https://evcarspec.com/byd/seal-u-dmi/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/byd/shark-phev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/li-auto/l9-erev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/toyota/prius-phev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/toyota/rav4-prime-phev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/toyota/camry-hybrid/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/toyota/corolla-cross-hev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/honda/cr-v-hybrid/</loc><priority>0.9</priority></url>
+
+  <!-- Tesla Models -->
+  <url><loc>https://evcarspec.com/tesla/model-y/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/tesla/model-3/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/tesla/model-s/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/tesla/model-x/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/tesla/cybertruck/</loc><priority>0.9</priority></url>
+
+  <!-- BYD Models -->
+  <url><loc>https://evcarspec.com/byd/seal/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/byd/atto-3/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/byd/dolphin/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/byd/seagull/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/byd/han/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/byd/tang/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/byd/sealion-7/</loc><priority>0.9</priority></url>
+
+  <!-- Tata & Mahindra -->
+  <url><loc>https://evcarspec.com/tata/nexon-ev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/tata/punch-ev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/tata/curvv-ev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/tata/tiago-ev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/tata/harrier-ev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/mahindra/be-6e/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/mahindra/xev-9e/</loc><priority>0.9</priority></url>
+
+  <!-- Hyundai & Kia -->
+  <url><loc>https://evcarspec.com/hyundai/ioniq-5/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/hyundai/ioniq-6/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/hyundai/kona-electric/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/hyundai/inster/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/kia/ev6/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/kia/ev9/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/kia/ev3/</loc><priority>0.9</priority></url>
+
+  <!-- Xiaomi, XPeng, Zeekr & MG -->
+  <url><loc>https://evcarspec.com/xiaomi/su7/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/xpeng/g6/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/zeekr/001/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/mg/mg4-ev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/mg/windsor-ev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/mg/cyberster/</loc><priority>0.9</priority></url>
+
+  <!-- Rivian, Lucid, Ford & GM -->
+  <url><loc>https://evcarspec.com/rivian/r1t/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/rivian/r1s/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/rivian/r2/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/lucid/air/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/lucid/gravity/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/ford/mustang-mach-e/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/ford/f-150-lightning/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/chevrolet/equinox-ev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/chevrolet/silverado-ev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/gmc/hummer-ev/</loc><priority>0.9</priority></url>
+
+  <!-- Porsche, BMW, Mercedes & VW -->
+  <url><loc>https://evcarspec.com/porsche/taycan/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/porsche/macan-ev/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/bmw/i4/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/bmw/ix/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/mercedes/eqs/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/volkswagen/id-4/</loc><priority>0.9</priority></url>
+  <url><loc>https://evcarspec.com/volvo/ex30/</loc><priority>0.9</priority></url>
+
+  <!-- E-Scooters -->
+  <url><loc>https://evcarspec.com/ola/s1-pro/</loc><priority>0.8</priority></url>
+  <url><loc>https://evcarspec.com/ather/450x/</loc><priority>0.8</priority></url>
+  <url><loc>https://evcarspec.com/tvs/iqube/</loc><priority>0.8</priority></url>
+  <url><loc>https://evcarspec.com/bajaj/chetak-ev/</loc><priority>0.8</priority></url>
+  <url><loc>https://evcarspec.com/bmw/ce-04/</loc><priority>0.8</priority></url>
+
+</urlset>
