@@ -3,130 +3,178 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact Us | EVCarSpec.com</title>
-  <meta name="description" content="Contact Muhammad Irshad and the EVCarSpec.com editorial team directly via email for specification updates, new EV requests, or business inquiries." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/evs-data.js"></script>
+  <title>Contact Us — Submit EV Specs, Corrections & Inquiries | EVCarSpec.com</title>
+  <meta name="description" content="Get in touch with the EVCarSpec.com editorial and technical team to request a new electric vehicle review, report a specification update, or inquire about partnerships." />
+  <link rel="canonical" href="https://evcarspec.com/contact/" />
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #111827;
+      --border: #1f2937;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --accent: #10b981;
+      --accent-dark: #059669;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+    header {
+      background: rgba(17, 24, 39, 0.95);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; flex-wrap: wrap; gap: 15px; max-width: 1140px; margin: 0 auto; }
+    .logo { font-size: 1.5rem; font-weight: 800; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--accent); }
+    nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.92rem; }
+    nav a { color: var(--text); font-weight: 500; text-decoration: none; }
+    nav a:hover { color: var(--accent); }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; margin: 40px 0; }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+    .card-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 30px; }
+    h1 { font-size: 2rem; margin-bottom: 12px; color: #fff; }
+    h2 { font-size: 1.3rem; margin-bottom: 14px; color: var(--accent); }
+    p { margin-bottom: 16px; color: #d1d5db; font-size: 0.96rem; }
+    .info-item { background: var(--bg); border: 1px solid var(--border); padding: 16px; border-radius: 10px; margin-bottom: 14px; }
+    .info-item span { display: block; font-size: 0.78rem; color: var(--muted); text-transform: uppercase; }
+    .info-item strong { font-size: 1.05rem; color: #fff; }
+
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; color: #e5e7eb; }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+    textarea { min-height: 130px; resize: vertical; }
+    .btn-submit {
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      width: 100%;
+    }
+    .btn-submit:hover { background: var(--accent-dark); color: #fff; }
+    #formStatus { margin-top: 14px; font-weight: 600; color: var(--accent); display: none; }
+
+    footer { background: #070a12; border-top: 1px solid var(--border); padding: 36px 0; margin-top: 50px; color: var(--muted); font-size: 0.9rem; }
+    .footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
-
-  <!-- Upgraded Top Header with Categories & Top Brands Bar -->
-  <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-lg border-b border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
-      <div class="flex items-center space-x-3">
-        <a href="/" class="text-2xl font-extrabold tracking-tight text-emerald-400">EVCarSpec<span class="text-white">.com</span></a>
-        <span class="hidden md:inline-block bg-emerald-500/20 text-emerald-300 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-emerald-500/30">Global EV Database</span>
-      </div>
-
-      <nav class="hidden lg:flex items-center space-x-4 text-xs font-bold text-slate-300">
-        <button onclick="openFilterView('category', 'SUV')" class="hover:text-emerald-400 transition">🚙 SUVs</button>
-        <button onclick="openFilterView('category', 'Sedan')" class="hover:text-emerald-400 transition">🚗 Sedans</button>
-        <button onclick="openFilterView('category', 'Truck')" class="hover:text-emerald-400 transition">🛻 Trucks</button>
-        <button onclick="openFilterView('category', 'Scooter')" class="hover:text-emerald-400 transition">🛵 Scooters</button>
-        <button onclick="openFilterView('category', 'Bicycle')" class="hover:text-emerald-400 transition">🚲 Bicycles</button>
-        <button onclick="openFilterView('category', 'Bus')" class="hover:text-emerald-400 transition">🚌 EV Buses</button>
-        <button onclick="openFilterView('powertrain', 'PHEV')" class="text-blue-300 hover:text-blue-200 transition">🔌 PHEV</button>
-        <button onclick="openFilterView('powertrain', 'HEV')" class="text-amber-300 hover:text-amber-200 transition">♻️ HEV</button>
+<body>
+  <header>
+    <div class="container nav-bar">
+      <a href="/" class="logo">EVCarSpec<span>.com</span></a>
+      <nav>
+        <a href="/#database">All EVs</a>
+        <a href="/#compareSection">Compare Tool</a>
+        <a href="/#evGuides">EV Guides</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
       </nav>
-
-      <a href="/" class="text-xs sm:text-sm bg-slate-800 hover:bg-slate-700 px-3.5 py-2 rounded-lg font-bold transition border border-slate-700">← Home</a>
-    </div>
-
-    <div class="bg-slate-950/90 border-t border-slate-800/80 py-2 px-4">
-      <div class="max-w-7xl mx-auto flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs">
-        <span class="text-slate-400 font-bold uppercase text-[11px] shrink-0 mr-1">Top Brands:</span>
-        <div id="topBrandsBar" class="flex items-center gap-1.5 shrink-0"></div>
-      </div>
     </div>
   </header>
 
-  <!-- Dynamic Filter Drawer -->
-  <section id="filterCollectionSection" class="hidden max-w-6xl mx-auto px-4 pt-6">
-    <div class="bg-emerald-950 text-white p-6 rounded-2xl shadow-lg border border-emerald-700/50 mb-4">
-      <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
-        <div>
-          <span id="filterBadgeLabel" class="bg-emerald-500/20 text-emerald-300 text-xs font-extrabold px-3 py-1 rounded-full uppercase">Filtered View</span>
-          <h2 id="filterCollectionTitle" class="text-2xl font-extrabold mt-2">Matching Vehicles</h2>
+  <main class="container">
+    <div class="contact-grid">
+      <div class="card-box">
+        <h1>Contact Us</h1>
+        <p>Have a question about an electric vehicle's specifications, noticed a regional price update, or want us to add a new BEV, PHEV, E-Bike, or EV Bus to our database? We would love to hear from you.</p>
+
+        <div class="info-item">
+          <span>Editorial & Specification Updates</span>
+          <strong><a href="mailto:contact@evcarspec.com">contact@evcarspec.com</a></strong>
         </div>
-        <button onclick="document.getElementById('filterCollectionSection').classList.add('hidden')" class="bg-white text-slate-900 hover:bg-emerald-400 font-extrabold text-xs px-4 py-2.5 rounded-xl transition">✕ Close Filter</button>
+
+        <div class="info-item">
+          <span>Response Time</span>
+          <strong>Within 24–48 Business Hours</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Data Correction Policy</span>
+          <p style="margin:6px 0 0;font-size:0.88rem;color:var(--muted);">When reporting a specification or pricing correction, please include the vehicle model year, regional trim name, and official OEM reference link so our editors can verify and update the listing immediately.</p>
+        </div>
       </div>
-      <div id="filterCollectionGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-slate-800"></div>
-    </div>
-  </section>
 
-  <main class="max-w-3xl mx-auto px-4 py-12">
-    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-      <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Get In Touch</span>
-      <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mt-3 mb-4">Contact Us</h1>
-      <p class="text-slate-600 mb-6 leading-relaxed">
-        Have you spotted an updated battery specification, a regional price change, or want us to add a specific Electric Car, Hybrid, E-Scooter, EV Bicycle, or Electric Bus to our database? Reach out directly to our editorial desk via email.
-      </p>
-
-      <!-- Direct Email Card (Clean, Fast & 100% Reliable) -->
-      <div class="bg-slate-900 text-white p-6 md:p-8 rounded-2xl shadow-md mb-8">
-        <div class="space-y-3">
-          <p class="text-xs uppercase tracking-wider text-emerald-400 font-bold">Direct Editorial & Business Contact</p>
-          <p class="text-lg font-bold">👤 Founder & Chief Editor: <span class="text-emerald-300">Muhammad Irshad</span></p>
-          <p class="text-lg font-bold">📧 Official Email: <a href="mailto:irxhadgul@gmail.com" class="text-emerald-400 underline hover:text-emerald-300">irxhadgul@gmail.com</a></p>
-          <p class="text-xs text-slate-400 pt-1">We typically respond to all specification corrections, new vehicle requests, and advertising inquiries within 24 to 48 hours.</p>
-          <div class="pt-3">
-            <a href="mailto:irxhadgul@gmail.com?subject=EVCarSpec.com%20Inquiry" class="inline-block bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-sm px-6 py-3 rounded-xl transition">
-              ✉️ Send Email to irxhadgul@gmail.com
-            </a>
+      <div class="card-box">
+        <h2>Send Us a Message</h2>
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="name">Your Name *</label>
+            <input type="text" id="name" required placeholder="Enter your full name" />
           </div>
-        </div>
-      </div>
-
-      <!-- What You Can Email Us About -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-          <h2 class="font-bold text-slate-900 mb-1">🔋 Request a New EV Model</h2>
-          <p class="text-slate-600 text-xs">Send us the brand and model name of any BEV, PHEV, HEV, E-Bike, or EV Bus you would like added to EVCarSpec.com.</p>
-        </div>
-        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-          <h2 class="font-bold text-slate-900 mb-1">🌍 Specification & Price Updates</h2>
-          <p class="text-slate-600 text-xs">Report updated battery capacities, WLTP/EPA range figures, or regional price changes for US, UK, EU, China, UAE, or India.</p>
-        </div>
+          <div class="form-group">
+            <label for="email">Your Email Address *</label>
+            <input type="email" id="email" required placeholder="you@example.com" />
+          </div>
+          <div class="form-group">
+            <label for="subject">Inquiry Type</label>
+            <select id="subject">
+              <option value="Request New EV Model">Request a New EV Model in Database</option>
+              <option value="Spec or Price Correction">Report Specification / Price Update</option>
+              <option value="Advertising & Partnership">Advertising & Press Inquiry</option>
+              <option value="General Feedback">General Website Feedback</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message / Vehicle Details *</label>
+            <textarea id="message" required placeholder="Tell us the vehicle make, model, year, or question..."></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Send Message →</button>
+          <div id="formStatus">✅ Thank you! Your email client will open to send your message directly to our team, or you can email us at contact@evcarspec.com.</div>
+        </form>
       </div>
     </div>
   </main>
 
-  <footer class="bg-slate-900 text-slate-400 py-8 px-4 text-center text-sm mt-12 border-t border-slate-800">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-      <p>© 2026 EVCarSpec.com — Global Electric Vehicle Specifications Database.</p>
-      <div class="space-x-4 text-xs">
-        <a href="/about/" class="hover:text-white">About</a>
-        <a href="/contact/" class="text-white font-bold">Contact</a>
-        <a href="/privacy-policy/" class="hover:text-white">Privacy Policy</a>
-        <a href="/terms/" class="hover:text-white">Terms</a>
+  <footer>
+    <div class="footer-inner">
+      <p>© 2026 EVCarSpec.com — Independent Global Electric Vehicle Specifications Database.</p>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/about/">About Us</a>
+        <a href="/contact/">Contact Us</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/terms/">Terms & Disclaimer</a>
       </div>
     </div>
   </footer>
 
   <script>
-    const db = window.EV_DATABASE || [];
-    const brands = [...new Set(db.map(c => c.brand))];
-    document.getElementById("topBrandsBar").innerHTML = brands.map(b => `
-      <button onclick="openFilterView('brand', '${b}')" class="px-2.5 py-1 rounded-lg font-bold bg-slate-800 hover:bg-emerald-600 text-slate-200 hover:text-white transition whitespace-nowrap">${b}</button>
-    `).join('');
-
-    function openFilterView(type, val) {
-      let matches = type === 'brand' ? db.filter(c => c.brand === val)
-                  : type === 'category' ? db.filter(c => c.category === val)
-                  : db.filter(c => (c.powertrain || 'BEV') === val);
-      document.getElementById("filterBadgeLabel").innerText = `${type.toUpperCase()}: ${val}`;
-      document.getElementById("filterCollectionTitle").innerText = `${val} Vehicles (${matches.length} Models)`;
-      document.getElementById("filterCollectionGrid").innerHTML = matches.map(item => `
-        <a href="/${item.slug}/" class="bg-white p-4 rounded-xl border border-slate-200 hover:border-emerald-500 block transition">
-          <span class="text-xs font-extrabold text-emerald-600 uppercase">${item.brand} • ${item.category}</span>
-          <strong class="block text-base text-slate-900 mt-0.5">${item.name}</strong>
-          <span class="text-xs text-slate-500 block mt-1">${item.battery} • ${item.rangeText}</span>
-        </a>
-      `).join('');
-      const sec = document.getElementById("filterCollectionSection");
-      sec.classList.remove("hidden");
-      sec.scrollIntoView({ behavior: "smooth" });
-    }
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const subject = document.getElementById("subject").value;
+      const msg = document.getElementById("message").value.trim();
+      document.getElementById("formStatus").style.display = "block";
+      const mailtoLink = `mailto:contact@evcarspec.com?subject=${encodeURIComponent(subject + " - from " + name)}&body=${encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n\nMessage:\n" + msg)}`;
+      window.location.href = mailtoLink;
+    });
   </script>
 </body>
 </html>
