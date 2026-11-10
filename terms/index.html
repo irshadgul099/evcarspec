@@ -3,131 +3,113 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Terms of Use & Disclaimer | EVCarSpec.com</title>
-  <meta name="description" content="Terms of Use and Technical Specification Accuracy Disclaimer for EVCarSpec.com." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/evs-data.js"></script>
+  <title>Terms of Use & Automotive Disclaimer | EVCarSpec.com</title>
+  <meta name="description" content="Terms of Service and Legal Disclaimer for EVCarSpec.com covering electric vehicle specifications, real-world range estimates, and regional pricing accuracy." />
+  <link rel="canonical" href="https://evcarspec.com/terms/" />
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #111827;
+      --border: #1f2937;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --accent: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+    header {
+      background: rgba(17, 24, 39, 0.95);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; flex-wrap: wrap; gap: 15px; max-width: 1140px; margin: 0 auto; }
+    .logo { font-size: 1.5rem; font-weight: 800; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--accent); }
+    nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.92rem; }
+    nav a { color: var(--text); font-weight: 500; text-decoration: none; }
+    nav a:hover { color: var(--accent); }
+
+    .page-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 36px; margin: 40px 0; }
+    h1 { font-size: clamp(1.8rem, 3.5vw, 2.3rem); margin-bottom: 8px; color: #fff; }
+    .updated-date { color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; display: block; }
+    h2 { font-size: 1.35rem; margin: 26px 0 10px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    p { margin-bottom: 14px; color: #d1d5db; }
+    ul { margin: 0 0 16px 22px; color: #d1d5db; }
+    li { margin-bottom: 8px; }
+
+    footer { background: #070a12; border-top: 1px solid var(--border); padding: 36px 0; margin-top: 50px; color: var(--muted); font-size: 0.9rem; }
+    .footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
-
-  <!-- Upgraded Top Header with Categories & Top Brands Bar -->
-  <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-lg border-b border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
-      <div class="flex items-center space-x-3">
-        <a href="/" class="text-2xl font-extrabold tracking-tight text-emerald-400">EVCarSpec<span class="text-white">.com</span></a>
-        <span class="hidden md:inline-block bg-emerald-500/20 text-emerald-300 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-emerald-500/30">Global EV Database</span>
-      </div>
-
-      <nav class="hidden lg:flex items-center space-x-4 text-xs font-bold text-slate-300">
-        <button onclick="openFilterView('category', 'SUV')" class="hover:text-emerald-400 transition">🚙 SUVs</button>
-        <button onclick="openFilterView('category', 'Sedan')" class="hover:text-emerald-400 transition">🚗 Sedans</button>
-        <button onclick="openFilterView('category', 'Truck')" class="hover:text-emerald-400 transition">🛻 Trucks</button>
-        <button onclick="openFilterView('category', 'Scooter')" class="hover:text-emerald-400 transition">🛵 Scooters</button>
-        <button onclick="openFilterView('category', 'Bicycle')" class="hover:text-emerald-400 transition">🚲 Bicycles</button>
-        <button onclick="openFilterView('category', 'Bus')" class="hover:text-emerald-400 transition">🚌 EV Buses</button>
-        <button onclick="openFilterView('powertrain', 'PHEV')" class="text-blue-300 hover:text-blue-200 transition">🔌 PHEV</button>
-        <button onclick="openFilterView('powertrain', 'HEV')" class="text-amber-300 hover:text-amber-200 transition">♻️ HEV</button>
+<body>
+  <header>
+    <div class="container nav-bar">
+      <a href="/" class="logo">EVCarSpec<span>.com</span></a>
+      <nav>
+        <a href="/#database">All EVs</a>
+        <a href="/#compareSection">Compare Tool</a>
+        <a href="/#evGuides">EV Guides</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
       </nav>
-
-      <a href="/" class="text-xs sm:text-sm bg-slate-800 hover:bg-slate-700 px-3.5 py-2 rounded-lg font-bold transition border border-slate-700">← Home</a>
-    </div>
-
-    <div class="bg-slate-950/90 border-t border-slate-800/80 py-2 px-4">
-      <div class="max-w-7xl mx-auto flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs">
-        <span class="text-slate-400 font-bold uppercase text-[11px] shrink-0 mr-1">Top Brands:</span>
-        <div id="topBrandsBar" class="flex items-center gap-1.5 shrink-0"></div>
-      </div>
     </div>
   </header>
 
-  <!-- Dynamic Filter Drawer -->
-  <section id="filterCollectionSection" class="hidden max-w-6xl mx-auto px-4 pt-6">
-    <div class="bg-emerald-950 text-white p-6 rounded-2xl shadow-lg border border-emerald-700/50 mb-4">
-      <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
-        <div>
-          <span id="filterBadgeLabel" class="bg-emerald-500/20 text-emerald-300 text-xs font-extrabold px-3 py-1 rounded-full uppercase">Filtered View</span>
-          <h2 id="filterCollectionTitle" class="text-2xl font-extrabold mt-2">Matching Vehicles</h2>
-        </div>
-        <button onclick="document.getElementById('filterCollectionSection').classList.add('hidden')" class="bg-white text-slate-900 hover:bg-emerald-400 font-extrabold text-xs px-4 py-2.5 rounded-xl transition">✕ Close Filter</button>
-      </div>
-      <div id="filterCollectionGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-slate-800"></div>
-    </div>
-  </section>
+  <main class="container">
+    <div class="page-box">
+      <h1>Terms of Use & Legal Disclaimer</h1>
+      <span class="updated-date">Last Updated: November 10, 2026</span>
 
-  <main class="max-w-4xl mx-auto px-4 py-12">
-    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 space-y-6 text-slate-600 leading-relaxed">
-      <div>
-        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Terms & Conditions</span>
-        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mt-3">Terms of Use & Technical Disclaimer</h1>
-        <p class="text-xs text-slate-400 mt-1">Last Updated: November 2026</p>
-      </div>
+      <p>By accessing and using <strong>EVCarSpec.com</strong> (<code>https://evcarspec.com/</code>), you accept and agree to be bound by the terms, conditions, and disclaimers outlined on this page. If you do not agree with any part of these terms, please discontinue use of our website.</p>
 
-      <p>
-        Welcome to <strong>EVCarSpec.com</strong>. By accessing this website, you agree to be bound by these Terms of Use and our Technical Specification Disclaimer. If you disagree with any part of these terms, please do not use our website.
-      </p>
+      <h2>1. Automotive Specifications & Range Disclaimer</h2>
+      <p>All technical data, usable battery capacities (kWh), charging speeds (kW), and driving range figures provided on EVCarSpec.com are compiled for informational and comparative purposes only:</p>
+      <ul>
+        <li><strong>Real-World Range Estimates:</strong> Actual electric vehicle driving range varies significantly based on driving speed, ambient temperature, elevation changes, HVAC heating/cooling usage, tire size, payload, and battery state of health. Our "EVCarSpec Real-World Range" is an independent engineering estimate and is not a guarantee of achievable range.</li>
+        <li><strong>Manufacturer Specification Changes:</strong> Automakers frequently modify battery suppliers, cell chemistry (LFP vs. NMC), software buffers, and peak charging curves across model years and production plants without prior notice. Always verify exact vehicle specifications with an authorized dealership before purchasing.</li>
+      </ul>
 
-      <h2 class="text-xl font-bold text-slate-900 pt-2">1. EV Specification & Pricing Accuracy Disclaimer</h2>
-      <p>
-        All technical specifications, battery capacities (kWh), driving range figures (WLTP, EPA, CLTC, MIDC), charging times, acceleration numbers, and multi-country vehicle prices published on <strong>EVCarSpec.com</strong> are provided for informational and comparison purposes only.
-      </p>
-      <p>
-        Automakers frequently revise battery chemistries, software-locked capacities, onboard chargers, and retail prices across different markets (US, UK, Europe, China, UAE, India) without prior notice. While our editorial team led by <strong>Muhammad Irshad</strong> strives to keep all data accurate and up to date, we cannot guarantee 100% real-time accuracy. Always verify final specifications and on-road pricing with an authorized dealer before purchasing a vehicle.
-      </p>
+      <h2>2. Global Pricing & Currency Disclaimer</h2>
+      <p>Vehicle prices displayed in USD ($), GBP (£), EUR (€), INR (₹ Lakh), AED, and CNY (¥) represent estimated Manufacturer Suggested Retail Prices (MSRP) or approximate converted market values for comparison purposes. Displayed prices exclude regional registration fees, import tariffs, road taxes, destination charges, dealer markups, and government EV subsidies unless explicitly stated.</p>
 
-      <h2 class="text-xl font-bold text-slate-900 pt-2">2. Interactive Calculators Disclaimer</h2>
-      <p>
-        Our interactive charging time and cost calculators provide mathematical estimates based on standard charging curves and user-entered electricity tariffs. Actual charging speed varies depending on ambient temperature, battery state-of-charge (SoC), battery pre-conditioning, and charger hardware limits.
-      </p>
+      <h2>3. Trademark & Brand Notice</h2>
+      <p>All automaker names, vehicle model names, and brand references (including but not limited to Tesla, BYD, Tata, Hyundai, Kia, BMW, Rivian, Xiaomi, and MG) are registered trademarks of their respective owners. Their use on EVCarSpec.com is strictly for editorial identification, technical comparison, and consumer information under nominative fair use. EVCarSpec.com is completely independent and is not endorsed by or affiliated with any vehicle manufacturer.</p>
 
-      <h2 class="text-xl font-bold text-slate-900 pt-2">3. Intellectual Property & Trademarks</h2>
-      <p>
-        All manufacturer names, brand logos, and model designations are registered trademarks of their respective owners. Their use on EVCarSpec.com is strictly for nominative fair-use identification and comparative reference.
-      </p>
+      <h2>4. Intellectual Property Rights</h2>
+      <p>Unless otherwise stated, EVCarSpec.com owns the intellectual property rights for the custom layout, comparison algorithms, standardized real-world range tables, and original editorial reviews published on this website. You may not scrape, republish, or redistribute our articles or database in bulk without prior written permission.</p>
 
-      <h2 class="text-xl font-bold text-slate-900 pt-2">4. Contact Us</h2>
-      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm text-slate-700 space-y-1">
-        <p><strong>Owner & Administrator:</strong> Muhammad Irshad</p>
-        <p><strong>Email:</strong> <a href="mailto:irxhadgul@gmail.com" class="text-emerald-600 font-bold hover:underline">irxhadgul@gmail.com</a></p>
-      </div>
+      <h2>5. Limitation of Liability</h2>
+      <p>In no event shall EVCarSpec.com or its editors be held liable for any financial loss, purchasing decision, or damages arising out of the use or inability to use the specifications, range estimates, or pricing data presented on this website.</p>
+
+      <h2>6. Contact Information</h2>
+      <p>For any legal inquiries or specification corrections regarding these Terms and Disclaimers, please contact us at <a href="mailto:contact@evcarspec.com">contact@evcarspec.com</a>.</p>
     </div>
   </main>
 
-  <footer class="bg-slate-900 text-slate-400 py-8 px-4 text-center text-sm mt-12 border-t border-slate-800">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-      <p>© 2026 EVCarSpec.com — Global Electric Vehicle Specifications Database.</p>
-      <div class="space-x-4 text-xs">
-        <a href="/about/" class="hover:text-white">About</a>
-        <a href="/contact/" class="hover:text-white">Contact</a>
-        <a href="/privacy-policy/" class="hover:text-white">Privacy Policy</a>
-        <a href="/terms/" class="text-white font-bold">Terms</a>
+  <footer>
+    <div class="footer-inner">
+      <p>© 2026 EVCarSpec.com — Independent Global Electric Vehicle Specifications Database.</p>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/about/">About Us</a>
+        <a href="/contact/">Contact Us</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/terms/">Terms & Disclaimer</a>
       </div>
     </div>
   </footer>
-
-  <script>
-    const db = window.EV_DATABASE || [];
-    const brands = [...new Set(db.map(c => c.brand))];
-    document.getElementById("topBrandsBar").innerHTML = brands.map(b => `
-      <button onclick="openFilterView('brand', '${b}')" class="px-2.5 py-1 rounded-lg font-bold bg-slate-800 hover:bg-emerald-600 text-slate-200 hover:text-white transition whitespace-nowrap">${b}</button>
-    `).join('');
-
-    function openFilterView(type, val) {
-      let matches = type === 'brand' ? db.filter(c => c.brand === val)
-                  : type === 'category' ? db.filter(c => c.category === val)
-                  : db.filter(c => (c.powertrain || 'BEV') === val);
-      document.getElementById("filterBadgeLabel").innerText = `${type.toUpperCase()}: ${val}`;
-      document.getElementById("filterCollectionTitle").innerText = `${val} Vehicles (${matches.length} Models)`;
-      document.getElementById("filterCollectionGrid").innerHTML = matches.map(item => `
-        <a href="/${item.slug}/" class="bg-white p-4 rounded-xl border border-slate-200 hover:border-emerald-500 block transition">
-          <span class="text-xs font-extrabold text-emerald-600 uppercase">${item.brand} • ${item.category}</span>
-          <strong class="block text-base text-slate-900 mt-0.5">${item.name}</strong>
-          <span class="text-xs text-slate-500 block mt-1">${item.battery} • ${item.rangeText}</span>
-        </a>
-      `).join('');
-      const sec = document.getElementById("filterCollectionSection");
-      sec.classList.remove("hidden");
-      sec.scrollIntoView({ behavior: "smooth" });
-    }
-  </script>
 </body>
 </html>
