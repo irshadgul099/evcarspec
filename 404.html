@@ -15,7 +15,7 @@
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
       <a href="/" class="text-2xl font-extrabold tracking-tight text-emerald-400">EVCarSpec<span class="text-white">.com</span></a>
       <div class="flex items-center gap-3">
-        <a href="/#compareSection" class="hidden sm:inline-block text-xs bg-emerald-600 hover:bg-emerald-500 px-3.5 py-2 rounded-lg font-bold transition">⚖️ Compare EVs</a>
+        <a href="#inPageCompare" class="hidden sm:inline-block text-xs bg-emerald-600 hover:bg-emerald-500 px-3.5 py-2 rounded-lg font-bold transition">⚖️ Compare This EV</a>
         <a href="/" class="text-sm bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg font-medium transition">← All EVs</a>
       </div>
     </div>
@@ -38,10 +38,10 @@
   </footer>
 
   <script>
+    let currentCar = null;
     let currentBatteryKwh = 75;
 
     function loadDynamicCarPage() {
-      // Read clean URL path e.g. /byd/seal/ -> "byd/seal"
       const path = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
       const db = window.EV_DATABASE || [];
       const car = db.find(c => c.slug.toLowerCase() === path);
@@ -52,14 +52,14 @@
         document.title = "Browse EV Specifications | EVCarSpec.com";
         container.innerHTML = `
           <div class="bg-white p-10 rounded-2xl shadow-sm border border-slate-200 text-center my-8">
-            <h1 class="text-2xl font-extrabold text-slate-900 mb-3">Select an Electric Vehicle from Our Database</h1>
+            <h1 class="text-2xl font-extrabold text-slate-900 mb-3">Select an Electric Vehicle from Our Database (${db.length} Models)</h1>
             <p class="text-slate-600 mb-6">Explore complete technical specifications, battery sizes, charging speeds, and global pricing below:</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-left max-w-4xl mx-auto">
               ${db.map(item => `
                 <a href="/${item.slug}/" class="p-4 rounded-xl border border-slate-200 hover:border-emerald-500 bg-slate-50 hover:bg-emerald-50 transition block">
-                  <span class="text-xs font-bold text-emerald-600 uppercase">${item.brand} • ${item.category}</span>
+                  <span class="text-xs font-bold text-emerald-600 uppercase">${item.brand} •${item.category}</span>
                   <strong class="block text-slate-900 font-bold">${item.name}</strong>
-                  <span class="text-xs text-slate-500">${item.battery} • ${item.rangeText}</span>
+                  <span class="text-xs text-slate-500">${item.battery} •${item.rangeText}</span>
                 </a>
               `).join('')}
             </div>
@@ -68,10 +68,17 @@
         return;
       }
 
+      currentCar = car;
       currentBatteryKwh = car.usableKwh || 60;
       document.title = `${car.name} Specifications, Battery, Range, Charging & Global Price | EVCarSpec`;
 
-      const relatedCars = db.filter(c => c.slug !== car.slug).slice(0, 6);
+      // Prefer same-category rivals first, then other popular EVs
+      const rivals = [
+        ...db.filter(c => c.slug !== car.slug && c.category === car.category),
+        ...db.filter(c => c.slug !== car.slug && c.category !== car.category)
+      ].slice(0, 6);
+
+      const allOtherCars = db.filter(c => c.slug !== car.slug);
 
       container.innerHTML = `
         <!-- Breadcrumbs -->
@@ -97,18 +104,12 @@
             <div><span class="block text-xs text-slate-500">Acceleration</span><strong class="text-lg text-slate-900">${car.accel}</strong></div>
           </div>
 
-          <!-- Pros & Cons Box (AdSense High-Value Editorial) -->
+          <!-- Pros & Cons Box -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
             <div class="bg-emerald-50/60 border border-emerald-200 p-4 rounded-xl">
               <h3 class="text-sm font-bold text-emerald-900 mb-2">✅ Key Strengths (Pros)</h3>
               <ul class="text-xs text-emerald-800 space-y-1.5 list-disc pl-4">
-                ${(car.pros || []).map(p => `<li>${p}</li>`).join('')}
-              </ul>
-            </div>
-            <div class="bg-rose-50/60 border border-rose-200 p-4 rounded-xl">
-              <h3 class="text-sm font-bold text-rose-900 mb-2">⚠️ Limitations (Cons)</h3>
-              <ul class="text-xs text-rose-800 space-y-1.5 list-disc pl-4">
-                ${(car.cons || []).map(c => `<li>${c}</li>`).join('')}
+                ${(car.pros || []).map(p => `<li>${p}</li>`).join('')} </ul> </div> <div class="bg-rose-50/60 border border-rose-200 p-4 rounded-xl"> <h3 class="text-sm font-bold text-rose-900 mb-2">⚠️ Limitations (Cons)</h3> <ul class="text-xs text-rose-800 space-y-1.5 list-disc pl-4"> ${(car.cons \vert{}\vert{} []).map(c => `<li>${c}</li>`).join('')}
               </ul>
             </div>
           </div>
@@ -203,21 +204,105 @@
           </div>
         </div>
 
-        <!-- Internal Links to Other EVs (Boosts Google SEO Crawling) -->
+        <!-- LIVE IN-PAGE SIDE-BY-SIDE COMPARISON TOOL -->
+        <div id="inPageCompare" class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 mb-8">
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+            <div>
+              <span class="text-xs font-bold uppercase text-emerald-600">Instant Head-to-Head</span>
+              <h2 class="text-xl font-extrabold text-slate-900">⚖️ Compare ${car.name} Side-by-Side</h2>
+              <p class="text-xs text-slate-500">Pick any rival EV from the dropdown (or click "Compare Instant" below) to compare specs right on this page.</p>
+            </div>
+            <div class="w-full md:w-72">
+              <label class="block text-xs font-bold text-slate-500 mb-1">Compare Against:</label>
+              <select id="rivalSelect" onchange="updateRivalCompare()" class="w-full bg-slate-900 text-white p-3 rounded-xl font-semibold text-sm">
+                ${allOtherCars.map((r, idx) => `<option value="${r.slug}" ${r.slug === rivals[0]?.slug ? 'selected' : ''}>${r.name} (${r.brand})</option>`).join('')}
+              </select>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="bg-slate-900 text-white">
+                  <th class="p-3.5 text-slate-300 font-medium w-1/3">Specification</th>
+                  <th class="p-3.5 text-emerald-400 font-bold w-1/3">${car.name}</th>
+                  <th id="rivalHeadName" class="p-3.5 text-amber-300 font-bold w-1/3">Rival EV</th>
+                </tr>
+              </thead>
+              <tbody id="rivalCompareBody" class="divide-y divide-slate-200"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Quick Rival Cards with BOTH Instant Compare & Full Spec Page Link -->
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-          <h2 class="text-lg font-bold text-slate-900 mb-4">Compare with Other Popular Electric Vehicles</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-            ${relatedCars.map(r => `
-              <a href="/${r.slug}/" class="p-3.5 rounded-xl border border-slate-200 hover:border-emerald-500 transition block">
-                <span class="text-xs font-bold text-emerald-600 uppercase">${r.brand}</span>
-                <strong class="block text-sm text-slate-900">${r.name}</strong>
-                <span class="text-xs text-slate-500">${r.rangeText} • ${r.prices.us}</span>
-              </a>
+          <h2 class="text-lg font-bold text-slate-900 mb-4">Popular Rivals & Alternatives</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            ${rivals.map(r => `
+              <div class="p-4 rounded-xl border border-slate-200 hover:border-emerald-500 transition flex flex-col justify-between bg-slate-50/50">
+                <div>
+                  <span class="text-xs font-bold text-emerald-600 uppercase">${r.brand} •${r.category}</span>
+                  <strong class="block text-base text-slate-900 mt-0.5">${r.name}</strong>
+                  <span class="text-xs text-slate-500 block mt-1">${r.battery} •${r.rangeText}</span>
+                  <span class="text-xs font-bold text-slate-800 block mt-1">US: ${r.prices.us} \vert{} IN:${r.prices.in}</span>
+                </div>
+                <div class="flex gap-2 mt-4 pt-2 border-t border-slate-200/80">
+                  <button onclick="quickSelectRival('${r.slug}')" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-2 px-2 rounded-lg transition">
+                    ⚖️ Compare Instant
+                  </button>
+                  <a href="/${r.slug}/" class="flex-1 text-center bg-slate-900 hover:bg-slate-700 text-white text-xs font-bold py-2 px-2 rounded-lg transition">
+                    Full Specs →
+                  </a>
+                </div>
+              </div>
             `).join('')}
           </div>
         </div>
       `;
+
       calcCharge();
+      updateRivalCompare();
+    }
+
+    function quickSelectRival(slug) {
+      const sel = document.getElementById('rivalSelect');
+      if (sel) {
+        sel.value = slug;
+        updateRivalCompare();
+        document.getElementById('inPageCompare').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function updateRivalCompare() {
+      const db = window.EV_DATABASE || [];
+      const slug = document.getElementById('rivalSelect')?.value;
+      const rival = db.find(c => c.slug === slug) || db[0];
+      if (!currentCar || !rival) return;
+
+      document.getElementById('rivalHeadName').innerHTML = `<a href="/${rival.slug}/" class="hover:underline">${rival.name} →</a>`;
+
+      const rows = [
+        ["Category & Architecture", `${currentCar.category} (${currentCar.architecture})`, `${rival.category} (${rival.architecture})`],
+        ["Battery Capacity (Usable)", `${currentCar.battery} (${currentCar.usableKwh} kWh)`, `${rival.battery} (${rival.usableKwh} kWh)`],
+        ["Cell Chemistry", currentCar.chemistry, rival.chemistry],
+        ["Official Range", currentCar.rangeText, rival.rangeText],
+        ["Real-World Highway Range", currentCar.realRange, rival.realRange],
+        ["DC Fast Charging", `${currentCar.dcChargeKw} (${currentCar.dcChargeTime})`, `${rival.dcChargeKw} (${rival.dcChargeTime})`],
+        ["Motor Power & Torque", `${currentCar.power} / ${currentCar.torque}`, `${rival.power} / ${rival.torque}`],
+        ["0–100 km/h Acceleration", currentCar.accel, rival.accel],
+        ["Cargo / Boot Space", currentCar.bootSpace, rival.bootSpace],
+        ["🇺🇸 USA Price", currentCar.prices.us, rival.prices.us],
+        ["🇬🇧 UK / 🇪🇺 EU Price", `${currentCar.prices.uk} / ${currentCar.prices.eu}`, `${rival.prices.uk} / ${rival.prices.eu}`],
+        ["🇮🇳 India Price", currentCar.prices.in, rival.prices.in]
+      ];
+
+      document.getElementById('rivalCompareBody').innerHTML = rows.map(r => `
+        <tr class="hover:bg-slate-50">
+          <td class="p-3 text-slate-500 font-medium">${r[0]}</td>
+          <td class="p-3 font-semibold text-slate-900 bg-emerald-50/30">${r[1]}</td>
+          <td class="p-3 font-semibold text-slate-900">${r[2]}</td>
+        </tr>
+      `).join('');
     }
 
     function calcCharge() {
