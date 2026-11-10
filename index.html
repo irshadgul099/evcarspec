@@ -6,6 +6,8 @@
   <title>EVCarSpec — Global Electric Vehicle Specifications, Range, Charging & Price Database</title>
   <meta name="description" content="Explore complete electric vehicle specifications, usable battery capacity, real-world range, DC fast-charging speeds, and multi-country pricing across US, China, Europe, UK, UAE, and India." />
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Connected directly to your Master EV Database -->
+  <script src="/evs-data.js"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -30,13 +32,14 @@
         <a href="#database" class="hover:text-emerald-400 transition">EV Finder</a>
         <a href="#brands" class="hover:text-emerald-400 transition">Brands</a>
         <a href="#compareSection" class="hover:text-emerald-400 transition">Compare EVs</a>
-        <a href="#methodology" class="hover:text-emerald-400 transition">How We Test</a>
+        <a href="/about/" class="hover:text-emerald-400 transition">About</a>
+        <a href="/contact/" class="hover:text-emerald-400 transition">Contact</a>
       </nav>
 
       <!-- Currency / Market Switcher -->
       <div class="flex items-center space-x-2">
         <label for="regionSelect" class="text-xs text-slate-400 hidden sm:inline">Market Price:</label>
-        <select id="regionSelect" onchange="renderVehicles()" class="bg-slate-800 text-white text-xs sm:text-sm font-semibold px-3 py-2 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer">
+        <select id="regionSelect" onchange="renderVehicles(); renderComparison();" class="bg-slate-800 text-white text-xs sm:text-sm font-semibold px-3 py-2 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer">
           <option value="us">🇺🇸 USA ($ USD)</option>
           <option value="uk">🇬🇧 UK (£ GBP)</option>
           <option value="eu">🇪🇺 Europe (€ EUR)</option>
@@ -62,7 +65,7 @@
       <div class="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/15 max-w-3xl mx-auto shadow-xl">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div class="md:col-span-2">
-            <input id="searchInput" oninput="renderVehicles()" type="text" placeholder="🔍 Search model or brand (e.g. Model Y, BYD Seal, Ioniq 5, Ola)..." class="w-full px-4 py-3 rounded-xl bg-white text-slate-900 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400" />
+            <input id="searchInput" oninput="renderVehicles()" type="text" placeholder="🔍 Search any EV model or brand (e.g. Model Y, BYD Seal, Kia EV9, Porsche, Ola)..." class="w-full px-4 py-3 rounded-xl bg-white text-slate-900 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400" />
           </div>
           <div>
             <select id="rangeFilter" onchange="renderVehicles()" class="w-full px-4 py-3 rounded-xl bg-slate-800 text-white font-semibold text-sm border border-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-400">
@@ -74,26 +77,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Quick Stats Bar -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto mt-8 text-center">
-        <div class="bg-slate-800/70 p-3 rounded-xl border border-slate-700">
-          <span class="block text-xl font-extrabold text-emerald-400">6 Regions</span>
-          <span class="text-xs text-slate-400">US, UK, EU, CN, UAE, IN</span>
-        </div>
-        <div class="bg-slate-800/70 p-3 rounded-xl border border-slate-700">
-          <span class="block text-xl font-extrabold text-emerald-400">100% Verified</span>
-          <span class="text-xs text-slate-400">Usable kWh & WLTP/EPA</span>
-        </div>
-        <div class="bg-slate-800/70 p-3 rounded-xl border border-slate-700">
-          <span class="block text-xl font-extrabold text-emerald-400">Cars & 2-Wheelers</span>
-          <span class="text-xs text-slate-400">SUVs, Sedans, Trucks, Scooters</span>
-        </div>
-        <div class="bg-slate-800/70 p-3 rounded-xl border border-slate-700">
-          <span class="block text-xl font-extrabold text-emerald-400">Live Compare</span>
-          <span class="text-xs text-slate-400">Side-by-Side Spec Check</span>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -101,11 +84,9 @@
   <section id="brands" class="max-w-7xl mx-auto px-4 pt-10 pb-4">
     <div class="flex items-center justify-between mb-3">
       <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500">Filter by Manufacturer</h2>
-      <button onclick="setBrand('All')" class="text-xs text-emerald-600 font-bold hover:underline">Reset Filters</button>
+      <button onclick="resetAllFilters()" class="text-xs text-emerald-600 font-bold hover:underline">Reset All Filters</button>
     </div>
-    <div id="brandContainer" class="flex flex-wrap gap-2">
-      <!-- Dynamic Brand Buttons Injected by JS -->
-    </div>
+    <div id="brandContainer" class="flex flex-wrap gap-2"></div>
   </section>
 
   <!-- Vehicle Category Tabs -->
@@ -120,30 +101,25 @@
         <button onclick="setCategory('Scooter')" data-cat="Scooter" class="cat-btn bg-white text-slate-700 border border-slate-200 hover:border-emerald-500 px-4 py-2 rounded-xl text-sm font-bold transition">🛵 E-Scooters & Bikes</button>
       </div>
       <div class="text-sm text-slate-500 font-medium">
-        Showing <span id="resultCount" class="font-bold text-slate-900">12</span> Electric Vehicles
+        Showing <span id="resultCount" class="font-bold text-slate-900">0</span> Electric Vehicles
       </div>
     </div>
   </section>
 
   <!-- Main EV Cards Grid -->
   <section class="max-w-7xl mx-auto px-4 pb-14">
-    <div id="carGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Populated Dynamically by JavaScript -->
-    </div>
+    <div id="carGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
   </section>
 
   <!-- Interactive Side-by-Side Comparison Tool Section -->
   <section id="compareSection" class="max-w-7xl mx-auto px-4 pb-16">
     <div class="bg-slate-900 text-white rounded-3xl p-6 md:p-8 shadow-xl">
-      <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-        <div>
-          <span class="text-xs uppercase tracking-wider text-emerald-400 font-bold">Interactive Tool</span>
-          <h2 class="text-2xl font-extrabold">⚖️ Side-by-Side EV Spec Comparison</h2>
-          <p class="text-slate-400 text-sm">Select any two electric vehicles below (or click "+ Compare" on any card above) to compare battery, charging, and prices.</p>
-        </div>
+      <div class="mb-6">
+        <span class="text-xs uppercase tracking-wider text-emerald-400 font-bold">Interactive Tool</span>
+        <h2 class="text-2xl font-extrabold">⚖️ Side-by-Side EV Spec Comparison</h2>
+        <p class="text-slate-400 text-sm">Select any two electric vehicles below (or click "+ Compare" on any card above) to compare battery, charging, and prices.</p>
       </div>
 
-      <!-- Selectors for Comparison -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <div>
           <label class="block text-xs text-slate-400 mb-1">Select First EV</label>
@@ -155,40 +131,37 @@
         </div>
       </div>
 
-      <!-- Comparison Output Table -->
       <div class="overflow-x-auto bg-slate-800/80 rounded-2xl border border-slate-700">
         <table class="w-full text-left border-collapse text-sm">
           <thead>
             <tr class="border-b border-slate-700 bg-slate-800">
               <th class="p-4 text-slate-400 font-medium w-1/3">Specification</th>
-              <th id="compHead1" class="p-4 text-emerald-400 font-bold text-base w-1/3">Car 1</th>
-              <th id="compHead2" class="p-4 text-emerald-400 font-bold text-base w-1/3">Car 2</th>
+              <th id="compHead1" class="p-4 text-emerald-400 font-bold text-base w-1/3">EV 1</th>
+              <th id="compHead2" class="p-4 text-emerald-400 font-bold text-base w-1/3">EV 2</th>
             </tr>
           </thead>
-          <tbody id="compTableBody" class="divide-y divide-slate-700/60">
-            <!-- Populated by JS -->
-          </tbody>
+          <tbody id="compTableBody" class="divide-y divide-slate-700/60"></tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- Editorial Guide & AdSense High-Value Content Section -->
+  <!-- Editorial Guide -->
   <section id="methodology" class="bg-white border-t border-slate-200 py-14 px-4">
     <div class="max-w-5xl mx-auto">
       <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mb-6 text-center">Understanding Electric Vehicle Specifications & Global Standards</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-slate-600 leading-relaxed">
         <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
           <h3 class="text-base font-bold text-slate-900 mb-2">🔋 Gross vs. Usable Battery (kWh)</h3>
-          <p>Every electric vehicle battery has a total (gross) capacity and a usable buffer. Manufacturers lock 3% to 8% of the pack to prevent deep discharge and prolong battery health. EVCarSpec lists both figures alongside battery chemistry—such as durable <strong>LFP (Lithium Iron Phosphate)</strong> and high-energy-density <strong>NMC (Nickel Manganese Cobalt)</strong>.</p>
+          <p>Every electric vehicle battery has a total (gross) capacity and a usable buffer. Manufacturers lock 3% to 8% of the pack to prevent deep discharge and prolong battery health. EVCarSpec lists both figures alongside battery chemistry—such as durable <strong>LFP</strong> and high-energy-density <strong>NMC</strong>.</p>
         </div>
         <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
           <h3 class="text-base font-bold text-slate-900 mb-2">🛣️ WLTP vs. EPA vs. Real-World Range</h3>
-          <p>Official driving range varies by testing cycle: the US <strong>EPA</strong> cycle is the most conservative and closest to highway driving, Europe's <strong>WLTP</strong> is approximately 10–15% more optimistic, and China's <strong>CLTC</strong> / India's <strong>MIDC</strong> cycles favor low-speed city driving. Always check our highway estimate before planning road trips.</p>
+          <p>Official driving range varies by testing cycle: the US <strong>EPA</strong> cycle is the most conservative, Europe's <strong>WLTP</strong> is approximately 10–15% more optimistic, and China's <strong>CLTC</strong> / India's <strong>MIDC</strong> cycles favor city speeds. Check our real-world highway range before planning road trips.</p>
         </div>
         <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
           <h3 class="text-base font-bold text-slate-900 mb-2">⚡ 400V vs. 800V Fast Charging</h3>
-          <p>Vehicles built on <strong>800V architectures</strong> (like the Hyundai Ioniq 5, Kia EV6, and Porsche Taycan) can accept 240–350 kW DC fast charging, replenishing 10% to 80% in under 18 minutes. Standard 400V EVs typically take 25 to 35 minutes on high-power DC chargers.</p>
+          <p>Vehicles built on <strong>800V architectures</strong> can accept 240–350 kW DC fast charging, replenishing 10% to 80% in under 18 minutes. Standard 400V EVs typically take 25 to 35 minutes on high-power DC chargers.</p>
         </div>
       </div>
     </div>
@@ -210,191 +183,8 @@
     </div>
   </footer>
 
-  <!-- MASTER EV DATABASE & SMART FILTER SCRIPT -->
   <script>
-    const evDatabase = [
-      {
-        id: "tesla-model-y",
-        brand: "Tesla",
-        name: "Tesla Model Y (Juniper)",
-        category: "SUV",
-        battery: "60 – 75 kWh (LFP / NMC)",
-        rangeKm: 533,
-        rangeText: "455 – 533 km (WLTP)",
-        charging: "250 kW DC (10-80% in 25m)",
-        accel: "3.7 – 5.9 sec",
-        power: "299 – 534 hp",
-        url: "/tesla/model-y/",
-        livePage: true,
-        prices: { us: "$44,990", uk: "£44,990", eu: "€44,990", cn: "¥249,900", ae: "AED 179,900", in: "₹65.00 Lakh (Est.)" }
-      },
-      {
-        id: "byd-seal",
-        brand: "BYD",
-        name: "BYD Seal EV",
-        category: "Sedan",
-        battery: "61.4 – 82.5 kWh (Blade LFP)",
-        rangeKm: 570,
-        rangeText: "460 – 570 km (WLTP)",
-        charging: "150 kW DC (10-80% in 26m)",
-        accel: "3.8 – 7.5 sec",
-        power: "204 – 530 hp",
-        url: "/byd/seal/",
-        livePage: false,
-        prices: { us: "$38,000 (Global Est.)", uk: "£45,695", eu: "€44,990", cn: "¥179,800", ae: "AED 164,900", in: "₹41.00 Lakh" }
-      },
-      {
-        id: "tata-nexon-ev",
-        brand: "Tata",
-        name: "Tata Nexon EV (45 kWh)",
-        category: "SUV",
-        battery: "30 – 45 kWh (LFP)",
-        rangeKm: 489,
-        rangeText: "325 – 489 km (MIDC)",
-        charging: "60 kW DC (10-80% in 40m)",
-        accel: "8.9 sec",
-        power: "143 hp (106 kW)",
-        url: "/tata/nexon-ev/",
-        livePage: false,
-        prices: { us: "$16,500 (Equiv.)", uk: "£13,200 (Equiv.)", eu: "€15,400 (Equiv.)", cn: "¥118,000 (Equiv.)", ae: "AED 60,500 (Equiv.)", in: "₹12.49 – ₹17.19 Lakh" }
-      },
-      {
-        id: "hyundai-ioniq-5",
-        brand: "Hyundai",
-        name: "Hyundai Ioniq 5 (84 kWh)",
-        category: "SUV",
-        battery: "63 – 84 kWh (800V NMC)",
-        rangeKm: 570,
-        rangeText: "440 – 570 km (WLTP)",
-        charging: "350 kW DC (10-80% in 18m)",
-        accel: "5.1 – 7.5 sec",
-        power: "170 – 325 hp",
-        url: "/hyundai/ioniq-5/",
-        livePage: false,
-        prices: { us: "$42,500", uk: "£39,900", eu: "€43,900", cn: "¥245,000", ae: "AED 185,000", in: "₹46.05 Lakh" }
-      },
-      {
-        id: "kia-ev6",
-        brand: "Kia",
-        name: "Kia EV6 (Facelift)",
-        category: "SUV",
-        battery: "63 – 84 kWh (800V NMC)",
-        rangeKm: 582,
-        rangeText: "428 – 582 km (WLTP)",
-        charging: "258 kW DC (10-80% in 18m)",
-        accel: "3.5 – 7.3 sec",
-        power: "229 – 641 hp (GT)",
-        url: "/kia/ev6/",
-        livePage: false,
-        prices: { us: "$42,600", uk: "£45,575", eu: "€46,990", cn: "¥282,800", ae: "AED 195,000", in: "₹60.97 Lakh" }
-      },
-      {
-        id: "xiaomi-su7",
-        brand: "Xiaomi",
-        name: "Xiaomi SU7 Max",
-        category: "Sedan",
-        battery: "73.6 – 101 kWh (800V Qilin)",
-        rangeKm: 800,
-        rangeText: "700 – 800 km (CLTC)",
-        charging: "350 kW DC (10-80% in 19m)",
-        accel: "2.78 – 5.28 sec",
-        power: "299 – 673 hp",
-        url: "/xiaomi/su7/",
-        livePage: false,
-        prices: { us: "$30,500 (CN Equiv.)", uk: "£24,200 (Equiv.)", eu: "€28,500 (Equiv.)", cn: "¥215,900", ae: "AED 115,000 (Import)", in: "₹26.00 Lakh (Equiv.)" }
-      },
-      {
-        id: "tesla-model-3",
-        brand: "Tesla",
-        name: "Tesla Model 3 (Highland)",
-        category: "Sedan",
-        battery: "57.5 – 75 kWh (LFP / NMC)",
-        rangeKm: 629,
-        rangeText: "513 – 629 km (WLTP)",
-        charging: "250 kW DC (10-80% in 25m)",
-        accel: "3.1 – 6.1 sec",
-        power: "283 – 510 hp",
-        url: "/tesla/model-3/",
-        livePage: false,
-        prices: { us: "$42,490", uk: "£39,990", eu: "€40,990", cn: "¥231,900", ae: "AED 167,900", in: "₹60.00 Lakh (Est.)" }
-      },
-      {
-        id: "tesla-cybertruck",
-        brand: "Tesla",
-        name: "Tesla Cybertruck AWD",
-        category: "Truck",
-        battery: "123 kWh (800V 4680 Cells)",
-        rangeKm: 547,
-        rangeText: "515 – 547 km (EPA)",
-        charging: "325 kW DC (10-80% in 30m)",
-        accel: "2.6 – 4.1 sec",
-        power: "600 – 845 hp",
-        url: "/tesla/cybertruck/",
-        livePage: false,
-        prices: { us: "$79,990", uk: "£65,000 (Equiv.)", eu: "€75,000 (Equiv.)", cn: "¥580,000 (Equiv.)", ae: "AED 340,000", in: "₹68.00 Lakh (Equiv.)" }
-      },
-      {
-        id: "byd-seagull",
-        brand: "BYD",
-        name: "BYD Seagull / Dolphin Mini",
-        category: "Hatchback",
-        battery: "30.1 – 38.9 kWh (Blade LFP)",
-        rangeKm: 405,
-        rangeText: "305 – 405 km (CLTC)",
-        charging: "40 kW DC (30-80% in 30m)",
-        accel: "13.0 sec",
-        power: "75 hp (55 kW)",
-        url: "/byd/seagull/",
-        livePage: false,
-        prices: { us: "$20,000 (LatAm)", uk: "£17,500 (Est.)", eu: "€19,990 (Est.)", cn: "¥69,800", ae: "AED 52,000", in: "₹10.00 Lakh (Est.)" }
-      },
-      {
-        id: "mahindra-be-6e",
-        brand: "Mahindra",
-        name: "Mahindra BE 6 (79 kWh)",
-        category: "SUV",
-        battery: "59 – 79 kWh (Blade LFP)",
-        rangeKm: 682,
-        rangeText: "535 – 682 km (MIDC)",
-        charging: "175 kW DC (20-80% in 20m)",
-        accel: "6.7 sec",
-        power: "282 hp (210 kW)",
-        url: "/mahindra/be-6e/",
-        livePage: false,
-        prices: { us: "$22,500 (Equiv.)", uk: "£18,000 (Equiv.)", eu: "€21,000 (Equiv.)", cn: "¥160,000 (Equiv.)", ae: "AED 82,000 (Equiv.)", in: "₹18.90 – ₹26.90 Lakh" }
-      },
-      {
-        id: "rivian-r1t",
-        brand: "Rivian",
-        name: "Rivian R1T (Gen 2)",
-        category: "Truck",
-        battery: "92.5 – 141.5 kWh (LFP / NMC)",
-        rangeKm: 675,
-        rangeText: "435 – 675 km (EPA)",
-        charging: "215 kW DC (10-80% in 30m)",
-        accel: "2.5 – 4.5 sec",
-        power: "533 – 1,025 hp",
-        url: "/rivian/r1t/",
-        livePage: false,
-        prices: { us: "$69,900", uk: "£56,000 (Equiv.)", eu: "€65,000 (Equiv.)", cn: "¥500,000 (Equiv.)", ae: "AED 260,000", in: "₹59.00 Lakh (Equiv.)" }
-      },
-      {
-        id: "ola-s1-pro",
-        brand: "Ola",
-        name: "Ola S1 Pro (Gen 2 E-Scooter)",
-        category: "Scooter",
-        battery: "4.0 kWh (Li-Ion Pack)",
-        rangeKm: 195,
-        rangeText: "195 km (Certified) / 143 km True",
-        charging: "Hypercharger (0-80% in 45m)",
-        accel: "2.6 sec (0-40 km/h)",
-        power: "14.7 hp (11 kW Peak)",
-        url: "/ola/s1-pro/",
-        livePage: false,
-        prices: { us: "$1,600 (Equiv.)", uk: "£1,300 (Equiv.)", eu: "€1,500 (Equiv.)", cn: "¥11,500 (Equiv.)", ae: "AED 5,900 (Equiv.)", in: "₹1.35 Lakh" }
-      }
-    ];
-
+    const evDatabase = window.EV_DATABASE || [];
     let activeCategory = "All";
     let activeBrand = "All";
 
@@ -405,12 +195,22 @@
       renderComparison();
     }
 
+    function resetAllFilters() {
+      activeCategory = "All";
+      activeBrand = "All";
+      document.getElementById("searchInput").value = "";
+      document.getElementById("rangeFilter").value = "0";
+      setCategory("All");
+      renderBrandPills();
+      renderVehicles();
+    }
+
     function renderBrandPills() {
       const brands = ["All", ...new Set(evDatabase.map(c => c.brand))];
       const container = document.getElementById("brandContainer");
       container.innerHTML = brands.map(b => `
         <button onclick="setBrand('${b}')" class="px-3.5 py-1.5 rounded-full text-xs font-bold transition border ${activeBrand === b ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-slate-700 border-slate-200 hover:border-emerald-500'}">
-          ${b === 'All' ? 'All Brands' : b}
+          ${b === 'All' ? 'All Brands (' + evDatabase.length + ')' : b}
         </button>
       `).join('');
     }
@@ -450,7 +250,7 @@
 
       const grid = document.getElementById("carGrid");
       if (filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-full bg-white p-10 rounded-2xl text-center border border-slate-200 text-slate-500">No electric vehicles match your current filter. Click "Reset Filters" to view all models.</div>`;
+        grid.innerHTML = `<div class="col-span-full bg-white p-10 rounded-2xl text-center border border-slate-200 text-slate-500">No electric vehicles match your current filter. Click "Reset All Filters" to view all models.</div>`;
         return;
       }
 
@@ -466,8 +266,8 @@
             </div>
             <div class="p-5 space-y-2.5 text-sm">
               <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Battery Pack:</span><span class="font-semibold text-right">${car.battery}</span></div>
-              <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Rated Range:</span><span class="font-bold text-emerald-600 text-right">${car.rangeText}</span></div>
-              <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Fast Charging:</span><span class="font-semibold text-right">${car.charging}</span></div>
+              <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Official Range:</span><span class="font-bold text-emerald-600 text-right">${car.rangeText}</span></div>
+              <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">DC Fast Charge:</span><span class="font-semibold text-right">${car.dcChargeKw} (${car.dcChargeTime})</span></div>
               <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Motor Power:</span><span class="font-semibold text-right">${car.power}</span></div>
               <div class="flex justify-between border-b border-slate-100 pb-2"><span class="text-slate-500">Acceleration:</span><span class="font-semibold text-right">${car.accel}</span></div>
               <div class="flex justify-between pt-1 items-center">
@@ -477,10 +277,10 @@
             </div>
           </div>
           <div class="px-5 pb-5 pt-2 flex gap-2">
-            <a href="${car.url}" class="flex-1 text-center ${car.livePage ? 'bg-slate-900 hover:bg-emerald-600 text-white' : 'bg-slate-800 hover:bg-emerald-600 text-white'} font-semibold py-2.5 px-3 rounded-xl text-sm transition">
+            <a href="/${car.slug}/" class="flex-1 text-center bg-slate-900 hover:bg-emerald-600 text-white font-semibold py-2.5 px-3 rounded-xl text-sm transition">
               Full Specs & Calc →
             </a>
-            <button onclick="selectForCompare('${car.id}')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-3 rounded-xl text-xs transition" title="Compare this EV">
+            <button onclick="selectForCompare('${car.slug}')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-3 rounded-xl text-xs transition">
               + Compare
             </button>
           </div>
@@ -491,28 +291,29 @@
     function populateCompareDropdowns() {
       const sel1 = document.getElementById("compCar1");
       const sel2 = document.getElementById("compCar2");
-      const options = evDatabase.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+      const options = evDatabase.map(c => `<option value="${c.slug}">${c.name}</option>`).join('');
       sel1.innerHTML = options;
       sel2.innerHTML = options;
       if (evDatabase.length > 1) sel2.selectedIndex = 1;
     }
 
-    function selectForCompare(carId) {
+    function selectForCompare(slug) {
       const sel1 = document.getElementById("compCar1");
       const sel2 = document.getElementById("compCar2");
-      if (sel1.value !== carId) {
+      if (sel1.value !== slug) {
         sel2.value = sel1.value;
-        sel1.value = carId;
+        sel1.value = slug;
       }
       renderComparison();
       document.getElementById("compareSection").scrollIntoView({ behavior: "smooth" });
     }
 
     function renderComparison() {
-      const id1 = document.getElementById("compCar1").value;
-      const id2 = document.getElementById("compCar2").value;
-      const c1 = evDatabase.find(c => c.id === id1) || evDatabase[0];
-      const c2 = evDatabase.find(c => c.id === id2) || evDatabase[1];
+      if (evDatabase.length === 0) return;
+      const s1 = document.getElementById("compCar1").value;
+      const s2 = document.getElementById("compCar2").value;
+      const c1 = evDatabase.find(c => c.slug === s1) || evDatabase[0];
+      const c2 = evDatabase.find(c => c.slug === s2) || evDatabase[1] || evDatabase[0];
       const region = document.getElementById("regionSelect").value;
 
       document.getElementById("compHead1").innerText = c1.name;
@@ -522,7 +323,8 @@
         ["Vehicle Category", c1.category, c2.category],
         ["Battery Capacity", c1.battery, c2.battery],
         ["Official Range", c1.rangeText, c2.rangeText],
-        ["DC Fast Charging", c1.charging, c2.charging],
+        ["Real-World Range", c1.realRange, c2.realRange],
+        ["DC Fast Charging", `${c1.dcChargeKw} (${c1.dcChargeTime})`, `${c2.dcChargeKw} (${c2.dcChargeTime})`],
         ["Motor Power", c1.power, c2.power],
         ["Acceleration", c1.accel, c2.accel],
         ["Selected Market Price", c1.prices[region], c2.prices[region]]
