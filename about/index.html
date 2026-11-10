@@ -4,124 +4,142 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us & Testing Methodology | EVCarSpec.com</title>
-  <meta name="description" content="Learn about EVCarSpec.com, founded by Muhammad Irshad. Explore our global electric vehicle database methodology, battery testing standards, and multi-region price tracking." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/evs-data.js"></script>
+  <meta name="description" content="Learn about EVCarSpec.com, our independent electric vehicle specifications database, real-world range calculation methodology, and editorial standards." />
+  <link rel="canonical" href="https://evcarspec.com/about/" />
+  <meta property="og:title" content="About EVCarSpec.com — Global EV Database & Methodology" />
+  <meta property="og:description" content="How EVCarSpec standardizes battery capacities, DC fast-charging speeds, real-world highway range, and global EV prices." />
+  <meta property="og:url" content="https://evcarspec.com/about/" />
+  <meta property="og:type" content="website" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "About EVCarSpec.com",
+    "url": "https://evcarspec.com/about/",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "EVCarSpec",
+      "url": "https://evcarspec.com/",
+      "description": "Independent Global Electric Vehicle Specifications, Real-World Range & Multi-Country Price Database."
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #111827;
+      --border: #1f2937;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --accent: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+    header {
+      background: rgba(17, 24, 39, 0.95);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; flex-wrap: wrap; gap: 15px; max-width: 1140px; margin: 0 auto; }
+    .logo { font-size: 1.5rem; font-weight: 800; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--accent); }
+    nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.92rem; }
+    nav a { color: var(--text); font-weight: 500; text-decoration: none; }
+    nav a:hover { color: var(--accent); }
+
+    .page-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+      margin: 40px 0;
+    }
+    h1 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); margin-bottom: 16px; color: #fff; }
+    h2 { font-size: 1.4rem; margin: 28px 0 12px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    p { margin-bottom: 16px; color: #d1d5db; }
+    ul { margin: 0 0 18px 22px; color: #d1d5db; }
+    li { margin-bottom: 8px; }
+    .method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 20px 0; }
+    .method-card { background: var(--bg); border: 1px solid var(--border); padding: 18px; border-radius: 12px; }
+    .method-card h3 { font-size: 1.05rem; color: #fff; margin-bottom: 8px; }
+    .method-card p { font-size: 0.92rem; color: var(--muted); margin: 0; }
+
+    footer { background: #070a12; border-top: 1px solid var(--border); padding: 36px 0; margin-top: 50px; color: var(--muted); font-size: 0.9rem; }
+    .footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
-
-  <!-- Upgraded Top Header with Categories & Top Brands Bar -->
-  <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-lg border-b border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
-      <div class="flex items-center space-x-3">
-        <a href="/" class="text-2xl font-extrabold tracking-tight text-emerald-400">EVCarSpec<span class="text-white">.com</span></a>
-        <span class="hidden md:inline-block bg-emerald-500/20 text-emerald-300 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-emerald-500/30">Global EV Database</span>
-      </div>
-
-      <nav class="hidden lg:flex items-center space-x-4 text-xs font-bold text-slate-300">
-        <button onclick="openFilterView('category', 'SUV')" class="hover:text-emerald-400 transition">🚙 SUVs</button>
-        <button onclick="openFilterView('category', 'Sedan')" class="hover:text-emerald-400 transition">🚗 Sedans</button>
-        <button onclick="openFilterView('category', 'Truck')" class="hover:text-emerald-400 transition">🛻 Trucks</button>
-        <button onclick="openFilterView('category', 'Scooter')" class="hover:text-emerald-400 transition">🛵 Scooters</button>
-        <button onclick="openFilterView('category', 'Bicycle')" class="hover:text-emerald-400 transition">🚲 Bicycles</button>
-        <button onclick="openFilterView('category', 'Bus')" class="hover:text-emerald-400 transition">🚌 EV Buses</button>
-        <button onclick="openFilterView('powertrain', 'PHEV')" class="text-blue-300 hover:text-blue-200 transition">🔌 PHEV</button>
-        <button onclick="openFilterView('powertrain', 'HEV')" class="text-amber-300 hover:text-amber-200 transition">♻️ HEV</button>
+<body>
+  <header>
+    <div class="container nav-bar">
+      <a href="/" class="logo">EVCarSpec<span>.com</span></a>
+      <nav>
+        <a href="/#database">All EVs</a>
+        <a href="/#compareSection">Compare Tool</a>
+        <a href="/#evGuides">EV Guides</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
       </nav>
-
-      <a href="/" class="text-xs sm:text-sm bg-slate-800 hover:bg-slate-700 px-3.5 py-2 rounded-lg font-bold transition border border-slate-700">← Home</a>
-    </div>
-
-    <div class="bg-slate-950/90 border-t border-slate-800/80 py-2 px-4">
-      <div class="max-w-7xl mx-auto flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs">
-        <span class="text-slate-400 font-bold uppercase text-[11px] shrink-0 mr-1">Top Brands:</span>
-        <div id="topBrandsBar" class="flex items-center gap-1.5 shrink-0"></div>
-      </div>
     </div>
   </header>
 
-  <!-- Dynamic Filter Drawer -->
-  <section id="filterCollectionSection" class="hidden max-w-6xl mx-auto px-4 pt-6">
-    <div class="bg-emerald-950 text-white p-6 rounded-2xl shadow-lg border border-emerald-700/50 mb-4">
-      <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
-        <div>
-          <span id="filterBadgeLabel" class="bg-emerald-500/20 text-emerald-300 text-xs font-extrabold px-3 py-1 rounded-full uppercase">Filtered View</span>
-          <h2 id="filterCollectionTitle" class="text-2xl font-extrabold mt-2">Matching Vehicles</h2>
+  <main class="container">
+    <div class="page-box">
+      <h1>About EVCarSpec.com</h1>
+      <p>Welcome to <strong>EVCarSpec.com</strong>, an independent, technical specifications database and comparison platform dedicated to electric mobility. Our mission is to help everyday car buyers, fleet operators, and automotive enthusiasts cut through confusing manufacturer marketing claims by providing standardized, transparent data across Pure Electric Vehicles (BEV), Plug-in Hybrids (PHEV), Self-Charging Hybrids (HEV), Electric Two-Wheelers, and Commercial EV Buses.</p>
+
+      <h2>Why We Built EVCarSpec</h2>
+      <p>When shopping for an electric vehicle across different global regions, consumers face inconsistent testing standards. A vehicle sold in Europe quotes WLTP range, the same car in North America quotes EPA figures, while models launched in China or India rely on CLTC or MIDC laboratory cycles. Furthermore, manufacturers often highlight gross battery capacity rather than usable energy, and peak charging speeds rather than average 10% to 80% charging times.</p>
+      <p>EVCarSpec.com solves this problem by normalizing technical specifications into a single, easy-to-compare format backed by multi-currency pricing across the United States (USD), United Kingdom (GBP), European Union (EUR), India (INR), United Arab Emirates (AED), and China (CNY).</p>
+
+      <h2>Our Data & Real-World Range Methodology</h2>
+      <p>Every specification sheet published on EVCarSpec is compiled and cross-verified using official OEM homologation documents, regulatory filings (EPA, WLTP, MIIT, ARAI), and empirical telemetry data. Here is how we standardize key metrics:</p>
+
+      <div class="method-grid">
+        <div class="method-card">
+          <h3>🛣️ Real-World Range Model</h3>
+          <p>Alongside official WLTP/EPA ratings, we calculate a standardized Real-World Mixed Range and a 110 km/h (68 mph) Highway Range based on usable battery capacity (kWh), aerodynamic drag coefficient (Cd), frontal area, curb weight, and HVAC thermal efficiency.</p>
         </div>
-        <button onclick="document.getElementById('filterCollectionSection').classList.add('hidden')" class="bg-white text-slate-900 hover:bg-emerald-400 font-extrabold text-xs px-4 py-2.5 rounded-xl transition">✕ Close Filter</button>
+        <div class="method-card">
+          <h3>🔋 Gross vs. Usable Battery</h3>
+          <p>We explicitly separate total lithium-ion pack capacity from net usable buffer, and identify cell chemistry—such as Lithium Iron Phosphate (LFP / Blade) versus Nickel Manganese Cobalt (NMC / NCA)—so owners understand daily charging limits.</p>
+        </div>
+        <div class="method-card">
+          <h3>⚡ Charging Curve Analysis</h3>
+          <p>Instead of only listing peak kilowatt numbers, our reviews evaluate nominal system voltage (400V vs. 800V architectures) and real 10% to 80% State of Charge (SoC) durations on DC fast chargers and 11 kW home AC wallboxes.</p>
+        </div>
       </div>
-      <div id="filterCollectionGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-slate-800"></div>
-    </div>
-  </section>
 
-  <main class="max-w-4xl mx-auto px-4 py-12">
-    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 space-y-6">
-      <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase">About Our Platform</span>
-      <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900">About EVCarSpec.com</h1>
-      
-      <p class="text-slate-600 leading-relaxed">
-        Welcome to <strong>EVCarSpec.com</strong>, an independent global technical database dedicated to Electric Vehicles—including pure battery electric cars (BEV), plug-in hybrids (PHEV), self-charging hybrids (HEV), electric SUVs, pickup trucks, e-scooters, electric bicycles, and commercial electric buses. Founded and managed by <strong>Muhammad Irshad</strong>, our mission is to simplify complex EV specifications so buyers, enthusiasts, and researchers worldwide can compare electric vehicles transparently in one place.
-      </p>
-
-      <h2 class="text-xl font-bold text-slate-900 pt-2">Our Data & Specification Methodology</h2>
-      <p class="text-slate-600 leading-relaxed">
-        Electric vehicle specifications are often confusing because manufacturers use different testing protocols across regions. At EVCarSpec, we standardize every vehicle profile using clear, comparable metrics:
-      </p>
-      <ul class="list-disc pl-6 space-y-2 text-slate-600">
-        <li><strong>Gross vs. Usable Battery Capacity:</strong> We clearly distinguish between total battery pack size and net usable energy (kWh), along with cell chemistry (LFP, NMC, NCA, or Solid-State).</li>
-        <li><strong>Standardized Range Figures:</strong> We report official WLTP (Europe/UK), EPA (United States), CLTC (China), and MIDC (India) ratings alongside realistic highway range estimates.</li>
-        <li><strong>Charging Performance:</strong> We track both onboard AC charger limits (kW) and peak DC fast-charging power, including 10% to 80% charging times.</li>
-        <li><strong>Multi-Region Pricing:</strong> Our database tracks base and trim-level retail prices across the United States, United Kingdom, European Union, China, the Middle East (UAE), and South Asia (India).</li>
-      </ul>
-
-      <h2 class="text-xl font-bold text-slate-900 pt-2">Editorial Independence & Contact</h2>
-      <p class="text-slate-600 leading-relaxed">
-        EVCarSpec.com is completely independent and is not affiliated with, endorsed by, or sponsored by any automotive manufacturer. All technical specifications are compiled from official manufacturer press releases, regulatory filings, and verified technical documentation.
-      </p>
-
-      <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 mt-4 text-sm space-y-1.5">
-        <p><strong>Founder & Chief Editor:</strong> Muhammad Irshad</p>
-        <p><strong>Official Email:</strong> <a href="mailto:irxhadgul@gmail.com" class="text-emerald-600 font-bold hover:underline">irxhadgul@gmail.com</a></p>
-      </div>
+      <h2>Editorial Independence & Accuracy</h2>
+      <p>EVCarSpec.com is an independent automotive publication. We are not owned by, sponsored by, or affiliated with any automobile manufacturer or dealership network. Our pros and cons assessments are written objectively to highlight both the engineering strengths and real-world limitations of every vehicle in our database.</p>
+      <p>If you spot a specification update, regional trim change, or pricing adjustment that needs correction, please reach out to our editorial team via our <a href="/contact/">Contact Us</a> page.</p>
     </div>
   </main>
 
-  <footer class="bg-slate-900 text-slate-400 py-8 px-4 text-center text-sm mt-12 border-t border-slate-800">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-      <p>© 2026 EVCarSpec.com — Global Electric Vehicle Specifications Database.</p>
-      <div class="space-x-4 text-xs">
-        <a href="/about/" class="text-white font-bold">About</a>
-        <a href="/contact/" class="hover:text-white">Contact</a>
-        <a href="/privacy-policy/" class="hover:text-white">Privacy Policy</a>
-        <a href="/terms/" class="hover:text-white">Terms</a>
+  <footer>
+    <div class="footer-inner">
+      <p>© 2026 EVCarSpec.com — Independent Global Electric Vehicle Specifications Database.</p>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/about/">About Us</a>
+        <a href="/contact/">Contact Us</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/terms/">Terms & Disclaimer</a>
       </div>
     </div>
   </footer>
-
-  <script>
-    const db = window.EV_DATABASE || [];
-    const brands = [...new Set(db.map(c => c.brand))];
-    document.getElementById("topBrandsBar").innerHTML = brands.map(b => `
-      <button onclick="openFilterView('brand', '${b}')" class="px-2.5 py-1 rounded-lg font-bold bg-slate-800 hover:bg-emerald-600 text-slate-200 hover:text-white transition whitespace-nowrap">${b}</button>
-    `).join('');
-
-    function openFilterView(type, val) {
-      let matches = type === 'brand' ? db.filter(c => c.brand === val)
-                  : type === 'category' ? db.filter(c => c.category === val)
-                  : db.filter(c => (c.powertrain || 'BEV') === val);
-      document.getElementById("filterBadgeLabel").innerText = `${type.toUpperCase()}: ${val}`;
-      document.getElementById("filterCollectionTitle").innerText = `${val} Vehicles (${matches.length} Models)`;
-      document.getElementById("filterCollectionGrid").innerHTML = matches.map(item => `
-        <a href="/${item.slug}/" class="bg-white p-4 rounded-xl border border-slate-200 hover:border-emerald-500 block transition">
-          <span class="text-xs font-extrabold text-emerald-600 uppercase">${item.brand} • ${item.category}</span>
-          <strong class="block text-base text-slate-900 mt-0.5">${item.name}</strong>
-          <span class="text-xs text-slate-500 block mt-1">${item.battery} • ${item.rangeText}</span>
-        </a>
-      `).join('');
-      const sec = document.getElementById("filterCollectionSection");
-      sec.classList.remove("hidden");
-      sec.scrollIntoView({ behavior: "smooth" });
-    }
-  </script>
 </body>
 </html>
