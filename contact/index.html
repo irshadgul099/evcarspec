@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Us | EVCarSpec.com</title>
-  <meta name="description" content="Get in touch with the EVCarSpec.com editorial and technical team to report specification updates, request new EV models, or inquire about partnerships." />
+  <meta name="description" content="Contact Muhammad Irshad and the EVCarSpec.com editorial team to report specification updates, request new EV models, or inquire about partnerships." />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
@@ -21,41 +21,42 @@
       <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Get In Touch</span>
       <h1 class="text-3xl font-extrabold text-slate-900 mt-3 mb-4">Contact Us</h1>
       <p class="text-slate-600 mb-6 leading-relaxed">
-        Have you spotted an updated battery spec, a regional price change, or want us to add a specific electric vehicle to our database? Send us a message below or email our editorial desk directly.
+        Have you spotted an updated battery specification, a regional price change, or want us to add a specific electric vehicle to our database? Reach out to our founder and editorial desk directly.
       </p>
 
-      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6 text-sm">
-        <p class="font-semibold text-slate-800">📧 Direct Email:</p>
-        <p class="text-emerald-600 font-bold">contact@evcarspec.com</p>
+      <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 mb-6 text-sm space-y-2">
+        <p class="text-slate-700"><strong>👤 Administrator / Editor:</strong> Muhammad Irshad</p>
+        <p class="text-slate-700"><strong>📧 Direct Email:</strong> <a href="mailto:irxhadgul@gmail.com" class="text-emerald-600 font-bold hover:underline">irxhadgul@gmail.com</a></p>
+        <p class="text-xs text-slate-500">We typically respond to all specification corrections and business inquiries within 24–48 hours.</p>
       </div>
 
-      <form onsubmit="event.preventDefault(); document.getElementById('msgSuccess').classList.remove('hidden');" class="space-y-4">
+      <form onsubmit="sendEmail(event)" class="space-y-4">
         <div>
           <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Your Name</label>
-          <input type="text" required placeholder="John Doe" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+          <input id="cName" type="text" required placeholder="Enter your name" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
         </div>
         <div>
-          <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Email Address</label>
-          <input type="email" required placeholder="you@example.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+          <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Your Email Address</label>
+          <input id="cEmail" type="email" required placeholder="you@example.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
         </div>
         <div>
           <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Subject</label>
-          <select class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-            <option>Request a New EV Model</option>
-            <option>Specification / Price Correction</option>
-            <option>Advertising & Business Inquiry</option>
-            <option>General Feedback</option>
+          <select id="cSubject" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <option value="Request a New EV Model">Request a New EV Model</option>
+            <option value="Specification / Price Correction">Specification / Price Correction</option>
+            <option value="Advertising & Partnership Inquiry">Advertising & Partnership Inquiry</option>
+            <option value="General Feedback">General Feedback</option>
           </select>
         </div>
         <div>
           <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Message</label>
-          <textarea rows="4" required placeholder="Write your message here..." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+          <textarea id="cMessage" rows="4" required placeholder="Write your message here..." class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
         </div>
         <button type="submit" class="w-full bg-slate-900 hover:bg-emerald-600 text-white font-bold py-3.5 rounded-xl transition">
-          Send Message
+          Send Message to Muhammad Irshad
         </button>
         <p id="msgSuccess" class="hidden text-emerald-600 font-semibold text-center text-sm pt-2">
-          ✅ Thank you! Your message has been recorded. Our team will review it shortly.
+          ✅ Thank you! Opening your email client to send your message directly to irxhadgul@gmail.com...
         </p>
       </form>
     </div>
@@ -65,5 +66,17 @@
     <p>© 2026 EVCarSpec.com — Global Electric Vehicle Specifications Database.</p>
   </footer>
 
+  <script>
+    function sendEmail(e) {
+      e.preventDefault();
+      const name = document.getElementById('cName').value;
+      const email = document.getElementById('cEmail').value;
+      const subject = document.getElementById('cSubject').value;
+      const message = document.getElementById('cMessage').value;
+      document.getElementById('msgSuccess').classList.remove('hidden');
+      const body = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n\nMessage:\n" + message);
+      window.location.href = "mailto:irxhadgul@gmail.com?subject=" + encodeURIComponent("[EVCarSpec] " + subject) + "&body=" + body;
+    }
+  </script>
 </body>
 </html>
