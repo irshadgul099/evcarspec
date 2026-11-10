@@ -4,138 +4,124 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Privacy Policy | EVCarSpec.com</title>
-  <meta name="description" content="Official Privacy Policy, Cookie Policy, GDPR, and Google AdSense compliance statement for EVCarSpec.com." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/evs-data.js"></script>
+  <meta name="description" content="Privacy Policy for EVCarSpec.com detailing cookie usage, Google AdSense DoubleClick DART cookies, GDPR/CCPA user data rights, and analytics policies." />
+  <link rel="canonical" href="https://evcarspec.com/privacy-policy/" />
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #111827;
+      --border: #1f2937;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --accent: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+    header {
+      background: rgba(17, 24, 39, 0.95);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+    .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; flex-wrap: wrap; gap: 15px; max-width: 1140px; margin: 0 auto; }
+    .logo { font-size: 1.5rem; font-weight: 800; color: var(--text); text-decoration: none; }
+    .logo span { color: var(--accent); }
+    nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.92rem; }
+    nav a { color: var(--text); font-weight: 500; text-decoration: none; }
+    nav a:hover { color: var(--accent); }
+
+    .page-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 36px; margin: 40px 0; }
+    h1 { font-size: clamp(1.8rem, 3.5vw, 2.3rem); margin-bottom: 8px; color: #fff; }
+    .updated-date { color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; display: block; }
+    h2 { font-size: 1.35rem; margin: 26px 0 10px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    p { margin-bottom: 14px; color: #d1d5db; }
+    ul { margin: 0 0 16px 22px; color: #d1d5db; }
+    li { margin-bottom: 8px; }
+
+    footer { background: #070a12; border-top: 1px solid var(--border); padding: 36px 0; margin-top: 50px; color: var(--muted); font-size: 0.9rem; }
+    .footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+    .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
-
-  <!-- Upgraded Top Header with Categories & Top Brands Bar -->
-  <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-lg border-b border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
-      <div class="flex items-center space-x-3">
-        <a href="/" class="text-2xl font-extrabold tracking-tight text-emerald-400">EVCarSpec<span class="text-white">.com</span></a>
-        <span class="hidden md:inline-block bg-emerald-500/20 text-emerald-300 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-emerald-500/30">Global EV Database</span>
-      </div>
-
-      <nav class="hidden lg:flex items-center space-x-4 text-xs font-bold text-slate-300">
-        <button onclick="openFilterView('category', 'SUV')" class="hover:text-emerald-400 transition">🚙 SUVs</button>
-        <button onclick="openFilterView('category', 'Sedan')" class="hover:text-emerald-400 transition">🚗 Sedans</button>
-        <button onclick="openFilterView('category', 'Truck')" class="hover:text-emerald-400 transition">🛻 Trucks</button>
-        <button onclick="openFilterView('category', 'Scooter')" class="hover:text-emerald-400 transition">🛵 Scooters</button>
-        <button onclick="openFilterView('category', 'Bicycle')" class="hover:text-emerald-400 transition">🚲 Bicycles</button>
-        <button onclick="openFilterView('category', 'Bus')" class="hover:text-emerald-400 transition">🚌 EV Buses</button>
-        <button onclick="openFilterView('powertrain', 'PHEV')" class="text-blue-300 hover:text-blue-200 transition">🔌 PHEV</button>
-        <button onclick="openFilterView('powertrain', 'HEV')" class="text-amber-300 hover:text-amber-200 transition">♻️ HEV</button>
+<body>
+  <header>
+    <div class="container nav-bar">
+      <a href="/" class="logo">EVCarSpec<span>.com</span></a>
+      <nav>
+        <a href="/#database">All EVs</a>
+        <a href="/#compareSection">Compare Tool</a>
+        <a href="/#evGuides">EV Guides</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
       </nav>
-
-      <a href="/" class="text-xs sm:text-sm bg-slate-800 hover:bg-slate-700 px-3.5 py-2 rounded-lg font-bold transition border border-slate-700">← Home</a>
-    </div>
-
-    <div class="bg-slate-950/90 border-t border-slate-800/80 py-2 px-4">
-      <div class="max-w-7xl mx-auto flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs">
-        <span class="text-slate-400 font-bold uppercase text-[11px] shrink-0 mr-1">Top Brands:</span>
-        <div id="topBrandsBar" class="flex items-center gap-1.5 shrink-0"></div>
-      </div>
     </div>
   </header>
 
-  <!-- Dynamic Filter Drawer -->
-  <section id="filterCollectionSection" class="hidden max-w-6xl mx-auto px-4 pt-6">
-    <div class="bg-emerald-950 text-white p-6 rounded-2xl shadow-lg border border-emerald-700/50 mb-4">
-      <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
-        <div>
-          <span id="filterBadgeLabel" class="bg-emerald-500/20 text-emerald-300 text-xs font-extrabold px-3 py-1 rounded-full uppercase">Filtered View</span>
-          <h2 id="filterCollectionTitle" class="text-2xl font-extrabold mt-2">Matching Vehicles</h2>
-        </div>
-        <button onclick="document.getElementById('filterCollectionSection').classList.add('hidden')" class="bg-white text-slate-900 hover:bg-emerald-400 font-extrabold text-xs px-4 py-2.5 rounded-xl transition">✕ Close Filter</button>
-      </div>
-      <div id="filterCollectionGrid" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-slate-800"></div>
-    </div>
-  </section>
+  <main class="container">
+    <div class="page-box">
+      <h1>Privacy Policy</h1>
+      <span class="updated-date">Last Updated: November 10, 2026</span>
 
-  <main class="max-w-4xl mx-auto px-4 py-12">
-    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 space-y-6 text-slate-600 leading-relaxed">
-      <div>
-        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Legal & Compliance</span>
-        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mt-3">Privacy Policy</h1>
-        <p class="text-xs text-slate-400 mt-1">Last Updated: November 2026</p>
-      </div>
+      <p>At <strong>EVCarSpec.com</strong> (accessible from <code>https://evcarspec.com/</code>), protecting the privacy of our visitors is one of our highest priorities. This Privacy Policy document outlines the types of information that are collected and recorded by EVCarSpec.com and how we use and safeguard that information.</p>
 
-      <p>
-        At <strong>EVCarSpec.com</strong> (<a href="https://evcarspec.com" class="text-emerald-600 underline">https://evcarspec.com</a>), operated by <strong>Muhammad Irshad</strong>, the privacy of our global visitors is one of our main priorities. This Privacy Policy document outlines the types of information that are collected and recorded by EVCarSpec.com and how we use it.
-      </p>
+      <h2>1. Information We Collect</h2>
+      <p>You can browse our electric vehicle database, use our interactive comparison tools, and switch regional currencies without creating an account or submitting personal information. We only collect personal data (such as your name and email address) when you voluntarily contact us via email or our <a href="/contact/">Contact Us</a> page.</p>
 
-      <h2 class="text-xl font-bold text-slate-900 pt-2">1. Log Files & Analytics</h2>
-      <p>
-        EVCarSpec.com follows a standard procedure of using log files. These files log visitors when they visit websites. The information collected by log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, and tracking aggregate user movement on the website.
-      </p>
+      <h2>2. Log Files & Analytics</h2>
+      <p>EVCarSpec.com follows a standard procedure of using server log files and privacy-preserving web analytics. These files log visitors when they visit websites. The information collected by log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and click counts. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing traffic trends, administering the site, and improving user experience.</p>
 
-      <h2 class="text-xl font-bold text-slate-900 pt-2">2. Cookies and Web Beacons</h2>
-      <p>
-        Like any other website, EVCarSpec.com uses cookies to store information including visitors' preferences (such as selected currency or vehicle comparison filters) and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.
-      </p>
+      <h2>3. Cookies and Web Beacons</h2>
+      <p>Like any modern website, EVCarSpec.com uses cookies to store visitor preferences (such as your selected currency or filter preferences) and to optimize the display of content based on visitors' browser types.</p>
 
-      <h2 class="text-xl font-bold text-slate-900 pt-2">3. Google DoubleClick DART Cookie & Advertising Partners</h2>
-      <p>
-        Google is a third-party vendor on our site. It also uses cookies, known as DART cookies, to serve ads to our site visitors based upon their visit to EVCarSpec.com and other sites on the internet. However, visitors may choose to decline the use of DART cookies by visiting the Google ad and content network Privacy Policy at the following URL:
-        <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" class="text-emerald-600 underline">https://policies.google.com/technologies/ads</a>
-      </p>
+      <h2>4. Google AdSense & DoubleClick DART Cookie</h2>
+      <ul>
+        <li>Google is a third-party vendor on our website. It uses cookies, known as <strong>DART cookies</strong>, to serve advertisements to our site visitors based upon their visit to <code>https://evcarspec.com/</code> and other sites on the internet.</li>
+        <li>Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to this website or other websites.</li>
+        <li>Users may opt out of the use of the DART cookie for personalized advertising by visiting the Google Ad and Content Network Privacy Policy at <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">https://policies.google.com/technologies/ads</a> or by visiting <a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.</li>
+      </ul>
 
-      <h2 class="text-xl font-bold text-slate-900 pt-2">4. GDPR Data Protection Rights (EU & UK Visitors)</h2>
-      <p>
-        We would like to make sure you are fully aware of all of your data protection rights under the General Data Protection Regulation (GDPR). Every user is entitled to the right to access, rectification, erasure, restrict processing, object to processing, and data portability.
-      </p>
+      <h2>5. GDPR Data Protection Rights (European Economic Area & UK Visitors)</h2>
+      <p>If you are a resident of the European Economic Area (EEA) or the United Kingdom, you are entitled to the following data protection rights under the General Data Protection Regulation (GDPR):</p>
+      <ul>
+        <li><strong>The right to access, update, or delete</strong> the personal information we hold on you.</li>
+        <li><strong>The right of rectification</strong> if your information is inaccurate or incomplete.</li>
+        <li><strong>The right to object</strong> to or restrict our processing of your personal data.</li>
+        <li><strong>The right to withdraw consent</strong> at any time through our Cookie Consent banner or browser settings.</li>
+      </ul>
 
-      <h2 class="text-xl font-bold text-slate-900 pt-2">5. CCPA Privacy Rights (US Visitors)</h2>
-      <p>
-        Under the California Consumer Privacy Act (CCPA), California consumers have the right to request that a business disclose the categories and specific pieces of personal data collected, request deletion of personal data, and opt-out of the sale of personal data. EVCarSpec.com does not sell personal data.
-      </p>
+      <h2>6. CCPA / CPRA Privacy Rights (California Visitors)</h2>
+      <p>Under the California Consumer Privacy Act (CCPA/CPRA), California consumers have the right to request that a business disclose the categories and specific pieces of personal data collected, request deletion of personal data, and opt out of the sale or sharing of personal data. EVCarSpec.com does not sell users' personal contact information.</p>
 
-      <h2 class="text-xl font-bold text-slate-900 pt-2">6. Contact Information</h2>
-      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm text-slate-700 space-y-1">
-        <p><strong>Administrator:</strong> Muhammad Irshad</p>
-        <p><strong>Email:</strong> <a href="mailto:irxhadgul@gmail.com" class="text-emerald-600 font-bold hover:underline">irxhadgul@gmail.com</a></p>
-      </div>
+      <h2>7. Children's Information</h2>
+      <p>EVCarSpec.com does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you believe that your child provided this kind of information on our website, please contact us immediately and we will promptly remove such information from our records.</p>
+
+      <h2>8. Contact Us</h2>
+      <p>If you have any questions or require more information about our Privacy Policy, please contact us by email at <a href="mailto:contact@evcarspec.com">contact@evcarspec.com</a> or visit our <a href="/contact/">Contact Us</a> page.</p>
     </div>
   </main>
 
-  <footer class="bg-slate-900 text-slate-400 py-8 px-4 text-center text-sm mt-12 border-t border-slate-800">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-      <p>© 2026 EVCarSpec.com — Global Electric Vehicle Specifications Database.</p>
-      <div class="space-x-4 text-xs">
-        <a href="/about/" class="hover:text-white">About</a>
-        <a href="/contact/" class="hover:text-white">Contact</a>
-        <a href="/privacy-policy/" class="text-white font-bold">Privacy Policy</a>
-        <a href="/terms/" class="hover:text-white">Terms</a>
+  <footer>
+    <div class="footer-inner">
+      <p>© 2026 EVCarSpec.com — Independent Global Electric Vehicle Specifications Database.</p>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/about/">About Us</a>
+        <a href="/contact/">Contact Us</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+        <a href="/terms/">Terms & Disclaimer</a>
       </div>
     </div>
   </footer>
-
-  <script>
-    const db = window.EV_DATABASE || [];
-    const brands = [...new Set(db.map(c => c.brand))];
-    document.getElementById("topBrandsBar").innerHTML = brands.map(b => `
-      <button onclick="openFilterView('brand', '${b}')" class="px-2.5 py-1 rounded-lg font-bold bg-slate-800 hover:bg-emerald-600 text-slate-200 hover:text-white transition whitespace-nowrap">${b}</button>
-    `).join('');
-
-    function openFilterView(type, val) {
-      let matches = type === 'brand' ? db.filter(c => c.brand === val)
-                  : type === 'category' ? db.filter(c => c.category === val)
-                  : db.filter(c => (c.powertrain || 'BEV') === val);
-      document.getElementById("filterBadgeLabel").innerText = `${type.toUpperCase()}: ${val}`;
-      document.getElementById("filterCollectionTitle").innerText = `${val} Vehicles (${matches.length} Models)`;
-      document.getElementById("filterCollectionGrid").innerHTML = matches.map(item => `
-        <a href="/${item.slug}/" class="bg-white p-4 rounded-xl border border-slate-200 hover:border-emerald-500 block transition">
-          <span class="text-xs font-extrabold text-emerald-600 uppercase">${item.brand} • ${item.category}</span>
-          <strong class="block text-base text-slate-900 mt-0.5">${item.name}</strong>
-          <span class="text-xs text-slate-500 block mt-1">${item.battery} • ${item.rangeText}</span>
-        </a>
-      `).join('');
-      const sec = document.getElementById("filterCollectionSection");
-      sec.classList.remove("hidden");
-      sec.scrollIntoView({ behavior: "smooth" });
-    }
-  </script>
 </body>
 </html>
