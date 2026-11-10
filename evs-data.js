@@ -1,4 +1,4 @@
-// MASTER GLOBAL EV DATABASE (EVCarSpec.com) - 50 TOP GLOBAL EVs READY
+// MASTER GLOBAL EVs DATABASE (EVCarSpec.com) - 50 TOP GLOBAL EVs READY
 window.EV_DATABASE = [
   // ================= 1. TESLA =================
   {
