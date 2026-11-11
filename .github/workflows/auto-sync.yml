@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Inject Static HTML Cards into index.html & Rebuild sitemap.xml
+      - name: Sync /ev/*.html into Static index.html, Top Charts & sitemap.xml
         run: node scripts/sync-ev.js
 
       - name: Commit & Push Updated Static index.html + sitemap.xml
@@ -30,5 +30,5 @@ jobs:
           git config user.name "evcarspec-auto-bot"
           git config user.email "bot@evcarspec.com"
           git add index.html sitemap.xml robots.txt
-          git diff --staged --quiet || git commit -m "chore(auto-sync): sync /ev/ vehicle cards to static index.html & sitemap.xml"
+          git diff --staged --quiet || git commit -m "chore(auto-sync): add new /ev/ vehicle to static index.html, leaderboards & sitemap.xml"
           git push
