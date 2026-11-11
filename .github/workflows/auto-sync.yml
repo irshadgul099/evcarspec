@@ -1,0 +1,34 @@
+name: Auto-Sync /ev/ Pages to Static index.html & sitemap.xml
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'ev/*.html'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-ev-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Inject Static HTML Cards into index.html & Rebuild sitemap.xml
+        run: node scripts/sync-ev.js
+
+      - name: Commit & Push Updated Static index.html + sitemap.xml
+        run: |
+          git config user.name "evcarspec-auto-bot"
+          git config user.email "bot@evcarspec.com"
+          git add index.html sitemap.xml robots.txt
+          git diff --staged --quiet || git commit -m "chore(auto-sync): sync /ev/ vehicle cards to static index.html & sitemap.xml"
+          git push
