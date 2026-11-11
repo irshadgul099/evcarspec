@@ -48,7 +48,7 @@ function buildStaticCardHtml(v) {
                 </div>
               </div>
               <h3 class="text-lg font-extrabold tracking-tight">
-                <a href="${v.slug}" onclick="openVehiclePage('${v.id}', event)" class="hover:text-emerald-400 transition">
+                <a href="${v.filePath}" onclick="openVehiclePage('${v.id}', event)" class="hover:text-emerald-400 transition">
                   ${v.name}
                 </a>
               </h3>
@@ -87,7 +87,7 @@ function buildStaticCardHtml(v) {
             </div>
             <div class="flex items-center gap-2">
               <button type="button" onclick="toggleCompareItem('${v.id}')" data-compare-btn="${v.id}" class="px-2.5 py-1.5 rounded-lg text-xs font-bold border border-slate-300 dark:border-slate-700 hover:border-emerald-500 text-slate-700 dark:text-slate-300 transition">+ Compare</button>
-              <a href="${v.slug}" onclick="openVehiclePage('${v.id}', event)" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition">Full Specs &amp; 10 FAQs →</a>
+              <a href="${v.filePath}" onclick="openVehiclePage('${v.id}', event)" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition">Full Specs &amp; 10 FAQs →</a>
             </div>
           </div>
         </article>`;
@@ -96,15 +96,21 @@ function buildStaticCardHtml(v) {
 if (uploadedVehicles.length > 0 && fs.existsSync(INDEX_PATH)) {
   let indexHtml = fs.readFileSync(INDEX_PATH, 'utf8');
   for (const v of uploadedVehicles) {
+    // 1. Inject Static HTML Card for Googlebot if not already present
     if (!indexHtml.includes(`data-ev-id="${v.id}"`)) {
       const cardMarkup = buildStaticCardHtml(v);
       indexHtml = indexHtml.replace('<!-- EV_STATIC_CARDS_START -->', '<!-- EV_STATIC_CARDS_START -->\n' + cardMarkup);
+    }
+    // 2. Inject into EV_DATABASE JS array so Top 10 Leaderboards, Search & VS Arena update automatically
+    if (!indexHtml.includes(`id: '${v.id}'`) && !indexHtml.includes(`"id": "${v.id}"`)) {
+      const jsEntry = '      ' + JSON.stringify(v, null, 2).replace(/\n/g, '\n      ') + ',\n';
+      indexHtml = indexHtml.replace('const EV_DATABASE = [\n', 'const EV_DATABASE = [\n' + jsEntry);
     }
   }
   fs.writeFileSync(INDEX_PATH, indexHtml, 'utf8');
 }
 
-// Generate clean sitemap.xml and robots.txt for Google Search Console
+// 3. Rebuild sitemap.xml and robots.txt automatically
 const today = new Date().toISOString().split('T')[0];
 const urls = [
   `  <url><loc>https://evcarspec.com/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>`,
@@ -116,4 +122,4 @@ fs.writeFileSync(SITEMAP_PATH, sitemapContent, 'utf8');
 
 const robotsContent = `User-agent: *\nAllow: /\nSitemap: https://evcarspec.com/sitemap.xml\n`;
 fs.writeFileSync(ROBOTS_PATH, robotsContent, 'utf8');
-console.log('Successfully synced', uploadedVehicles.length, 'vehicles into static index.html & sitemap.xml!');
+console.log('Synced', uploadedVehicles.length, 'vehicles into static index.html, EV_DATABASE, and sitemap.xml.');
