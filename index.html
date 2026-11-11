@@ -394,7 +394,25 @@
           <button type="button" onclick="setPowertrainFilter('MHEV')" data-pt-btn="MHEV" class="pt-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-cyan-500 transition">⚙️ MHEV (48V Mild Hybrid)</button>
         </div>
 
-        <!-- ROW 3: SPEC-GEEK QUICK TECH FILTERS -->
+        <!-- ROW 3: CLICKABLE BRAND & COUNTRY FILTER BAR (Auto-Populated + URL Linked) -->
+        <div class="flex flex-wrap items-center gap-1.5 py-3 border-b border-slate-200 dark:border-slate-800" id="brandFilterBar" role="tablist" aria-label="Brand Filter">
+          <span class="text-xs font-bold uppercase text-slate-400 mr-1">Brands:</span>
+          <button type="button" onclick="setBrandFilter('ALL')" data-brand-btn="ALL" class="brand-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950 transition">All Brands</button>
+          <button type="button" onclick="setBrandFilter('BYD')" data-brand-btn="BYD" class="brand-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition">BYD</button>
+          <button type="button" onclick="setBrandFilter('Tesla')" data-brand-btn="Tesla" class="brand-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition">Tesla</button>
+          <button type="button" onclick="setBrandFilter('Xiaomi')" data-brand-btn="Xiaomi" class="brand-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition">Xiaomi</button>
+          <button type="button" onclick="setBrandFilter('Ford')" data-brand-btn="Ford" class="brand-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition">Ford</button>
+          <button type="button" onclick="setBrandFilter('Li Auto')" data-brand-btn="Li Auto" class="brand-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition">Li Auto</button>
+          <button type="button" onclick="setBrandFilter('Yutong')" data-brand-btn="Yutong" class="brand-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition">Yutong</button>
+          <button type="button" onclick="setBrandFilter('Volvo Buses')" data-brand-btn="Volvo Buses" class="brand-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition">Volvo</button>
+          <button type="button" onclick="setBrandFilter('Ather Energy')" data-brand-btn="Ather Energy" class="brand-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition">Ather</button>
+          <button type="button" onclick="setBrandFilter('NIU')" data-brand-btn="NIU" class="brand-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition">NIU</button>
+          <button type="button" onclick="setBrandFilter('Aptera')" data-brand-btn="Aptera" class="brand-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition">Aptera</button>
+          <button type="button" onclick="setBrandFilter('Toyota')" data-brand-btn="Toyota" class="brand-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition">Toyota</button>
+          <button type="button" onclick="setBrandFilter('Mercedes-Benz')" data-brand-btn="Mercedes-Benz" class="brand-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition">Mercedes</button>
+        </div>
+
+        <!-- ROW 4: SPEC-GEEK QUICK TECH FILTERS -->
         <div class="flex flex-wrap items-center justify-between gap-2 pt-3">
           <div class="flex flex-wrap items-center gap-2">
             <span class="text-xs font-bold uppercase text-slate-400 mr-1">Spec-Geek Filters:</span>
@@ -408,8 +426,11 @@
               ⚡ 800V Ultra-Fast Charging
             </button>
           </div>
-          <div id="activeFilterCountLabel" class="text-xs font-mono text-slate-500 dark:text-slate-400">
-            Showing all 12 verified vehicles
+          <div class="flex flex-wrap items-center gap-2">
+            <div id="activeFilterChips" class="flex flex-wrap items-center gap-1.5"></div>
+            <div id="activeFilterCountLabel" class="text-xs font-mono text-slate-500 dark:text-slate-400">
+              Showing all 12 verified vehicles
+            </div>
           </div>
         </div>
 
@@ -2554,6 +2575,9 @@
       rangeMode: 'real', // 'real' or 'claimed'
       categoryFilter: 'ALL',
       powertrainFilter: 'ALL',
+      brandFilter: 'ALL',
+      countryFilter: 'ALL',
+      keywordFilter: '',
       techFilters: { v2l: false, lfp: false, arch800: false },
       leaderboardTab: 'ALL',
       compareList: ['xiaomi-su7-max', 'tesla-model-3-lr'],
@@ -2923,12 +2947,64 @@
       applyExplorerFilters();
     }
 
+    function setBrandFilter(brand) {
+      appState.brandFilter = brand || 'ALL';
+      document.querySelectorAll('.brand-filter-btn').forEach(function (btn) {
+        const bAttr = btn.getAttribute('data-brand-btn');
+        const isCurrent = bAttr.toLowerCase() === appState.brandFilter.toLowerCase();
+        btn.className = isCurrent
+          ? 'brand-filter-btn px-3 py-1 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950 shadow-sm transition'
+          : 'brand-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition';
+      });
+      applyExplorerFilters();
+    }
+
+    function setCountryFilter(country) {
+      appState.countryFilter = country || 'ALL';
+      applyExplorerFilters();
+    }
+
+    function filterByTag(type, value, ev) {
+      if (ev && ev.preventDefault) ev.preventDefault();
+      if (ev && ev.stopPropagation) ev.stopPropagation();
+      switchMainView('home');
+
+      if (type === 'cat' || type === 'category') {
+        setCategoryFilter(value);
+      } else if (type === 'pt' || type === 'powertrain') {
+        setPowertrainFilter(value);
+      } else if (type === 'brand') {
+        setBrandFilter(value);
+      } else if (type === 'country') {
+        setCountryFilter(value);
+      } else if (type === 'tech') {
+        if (value === 'v2l' || value === 'lfp' || value === 'arch800') {
+          if (!appState.techFilters[value]) {
+            toggleTechFilter(value);
+          } else {
+            applyExplorerFilters();
+          }
+        }
+      } else if (type === 'q') {
+        appState.keywordFilter = value || '';
+        applyExplorerFilters();
+      }
+
+      const exp = document.getElementById('explorer');
+      if (exp) exp.scrollIntoView({ behavior: 'smooth' });
+      showToast('Filtered by ' + type.toUpperCase() + ': ' + value);
+    }
+
     function resetAllFilters() {
       appState.techFilters = { v2l: false, lfp: false, arch800: false };
+      appState.brandFilter = 'ALL';
+      appState.countryFilter = 'ALL';
+      appState.keywordFilter = '';
       ['techFilterV2L', 'techFilterLFP', 'techFilter800V'].forEach(function (id) {
         const b = document.getElementById(id);
         if (b) b.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-emerald-500 transition';
       });
+      setBrandFilter('ALL');
       setCategoryFilter('ALL');
       setPowertrainFilter('ALL');
     }
@@ -2936,18 +3012,25 @@
     function applyExplorerFilters() {
       let visibleCount = 0;
       document.querySelectorAll('#staticVehicleGrid .ev-card').forEach(function (card) {
-        const cat = card.getAttribute('data-category');
-        const pt = card.getAttribute('data-powertrain');
+        const id = card.getAttribute('data-ev-id');
+        const vObj = EV_DATABASE.find(function (item) { return item.id === id; });
+        const cat = card.getAttribute('data-category') || (vObj ? vObj.category : '');
+        const pt = card.getAttribute('data-powertrain') || (vObj ? vObj.powertrain : '');
+        const brand = card.getAttribute('data-brand') || (vObj ? vObj.brand : '');
+        const country = card.getAttribute('data-country') || (vObj ? vObj.country : '');
         const v2l = card.getAttribute('data-v2l') === 'true';
         const lfp = card.getAttribute('data-lfp') === 'true';
         const arch800 = card.getAttribute('data-arch800') === 'true';
 
         let show = true;
-        if (appState.categoryFilter !== 'ALL' && cat !== appState.categoryFilter) show = false;
-        if (appState.powertrainFilter !== 'ALL' && pt !== appState.powertrainFilter) show = false;
+        if (appState.categoryFilter !== 'ALL' && cat.toLowerCase() !== appState.categoryFilter.toLowerCase()) show = false;
+        if (appState.powertrainFilter !== 'ALL' && pt.toLowerCase() !== appState.powertrainFilter.toLowerCase()) show = false;
+        if (appState.brandFilter !== 'ALL' && brand.toLowerCase().indexOf(appState.brandFilter.toLowerCase()) === -1) show = false;
+        if (appState.countryFilter !== 'ALL' && country.toLowerCase().indexOf(appState.countryFilter.toLowerCase()) === -1) show = false;
         if (appState.techFilters.v2l && !v2l) show = false;
         if (appState.techFilters.lfp && !lfp) show = false;
         if (appState.techFilters.arch800 && !arch800) show = false;
+        if (appState.keywordFilter && card.textContent.toLowerCase().indexOf(appState.keywordFilter.toLowerCase()) === -1) show = false;
 
         if (show) {
           card.classList.remove('hidden');
@@ -2957,6 +3040,24 @@
         }
       });
 
+      // Render active filter chips so user can see and clear any active tag
+      const chipsEl = document.getElementById('activeFilterChips');
+      if (chipsEl) {
+        const activeChips = [];
+        if (appState.categoryFilter !== 'ALL') activeChips.push({ label: 'Category: ' + appState.categoryFilter, clear: "setCategoryFilter('ALL')" });
+        if (appState.powertrainFilter !== 'ALL') activeChips.push({ label: 'Powertrain: ' + appState.powertrainFilter, clear: "setPowertrainFilter('ALL')" });
+        if (appState.brandFilter !== 'ALL') activeChips.push({ label: 'Brand: ' + appState.brandFilter, clear: "setBrandFilter('ALL')" });
+        if (appState.countryFilter !== 'ALL') activeChips.push({ label: 'Country: ' + appState.countryFilter, clear: "setCountryFilter('ALL')" });
+        if (appState.techFilters.v2l) activeChips.push({ label: 'Tech: V2L Backup', clear: "toggleTechFilter('v2l')" });
+        if (appState.techFilters.lfp) activeChips.push({ label: 'Tech: LFP Battery', clear: "toggleTechFilter('lfp')" });
+        if (appState.techFilters.arch800) activeChips.push({ label: 'Tech: 800V Fast', clear: "toggleTechFilter('arch800')" });
+        if (appState.keywordFilter) activeChips.push({ label: 'Tag: ' + appState.keywordFilter, clear: "appState.keywordFilter='';applyExplorerFilters()" });
+
+        chipsEl.innerHTML = activeChips.map(function (c) {
+          return `<button type="button" onclick="${c.clear}" class="px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 text-[11px] font-mono font-bold hover:bg-rose-500/20 hover:text-rose-300 transition">${c.label} ✕</button>`;
+        }).join('') + (activeChips.length > 1 ? `<button type="button" onclick="resetAllFilters()" class="px-2 py-0.5 rounded text-[11px] font-bold text-rose-400 hover:underline">Reset All</button>` : '');
+      }
+
       const countLbl = document.getElementById('activeFilterCountLabel');
       if (countLbl) {
         countLbl.textContent = 'Showing ' + visibleCount + ' of ' + EV_DATABASE.length + ' verified vehicles';
@@ -2965,6 +3066,112 @@
       if (emptyBox) {
         if (visibleCount === 0) emptyBox.classList.remove('hidden');
         else emptyBox.classList.add('hidden');
+      }
+    }
+
+    // Automatically turns every Powertrain, Category, Brand, Country, LFP, 800V, and V2L badge on cards into clickable internal filter links!
+    function makeStaticCardsClickable() {
+      // Ensure any new brands in EV_DATABASE also appear in #brandFilterBar
+      const brandBar = document.getElementById('brandFilterBar');
+      if (brandBar) {
+        const existingBrands = Array.from(brandBar.querySelectorAll('[data-brand-btn]')).map(function (b) {
+          return b.getAttribute('data-brand-btn').toLowerCase();
+        });
+        EV_DATABASE.forEach(function (v) {
+          if (v.brand && existingBrands.indexOf(v.brand.toLowerCase()) === -1) {
+            existingBrands.push(v.brand.toLowerCase());
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.setAttribute('data-brand-btn', v.brand);
+            btn.className = 'brand-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition';
+            btn.textContent = v.brand;
+            btn.onclick = function () { setBrandFilter(v.brand); };
+            brandBar.appendChild(btn);
+          }
+        });
+      }
+
+      document.querySelectorAll('#staticVehicleGrid .ev-card').forEach(function (card) {
+        const id = card.getAttribute('data-ev-id');
+        const v = EV_DATABASE.find(function (item) { return item.id === id; });
+        if (!v) return;
+        card.setAttribute('data-brand', v.brand);
+        card.setAttribute('data-country', v.country);
+
+        // Make top badges clickable (Powertrain, 800V, Category, Brand, Country)
+        const badgeContainer = card.querySelector('.flex.items-center.gap-1\.5');
+        if (badgeContainer) {
+          badgeContainer.innerHTML = `
+            <a href="?pt=${encodeURIComponent(v.powertrain)}#explorer" onclick="filterByTag('pt', '${v.powertrain}', event)" class="px-2.5 py-0.5 rounded-md text-[11px] font-mono font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition" title="Show all ${v.powertrain} vehicles">${v.powertrain}</a>
+            ${v.arch800v ? `<a href="?tech=arch800#explorer" onclick="filterByTag('tech', 'arch800', event)" class="px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 transition" title="Show all 800V Ultra-Fast EVs">800V</a>` : ''}
+            ${v.lfpBattery ? `<a href="?tech=lfp#explorer" onclick="filterByTag('tech', 'lfp', event)" class="px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-cyan-400 hover:bg-cyan-300 text-slate-950 transition" title="Show all LFP Battery EVs">LFP</a>` : ''}
+            <a href="?cat=${encodeURIComponent(v.category)}#explorer" onclick="filterByTag('cat', '${v.category}', event)" class="px-2 py-0.5 rounded-md text-[11px] font-mono bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 transition" title="Show all ${v.category}">${v.category}</a>
+            <a href="?brand=${encodeURIComponent(v.brand)}#explorer" onclick="filterByTag('brand', '${v.brand}', event)" class="px-2 py-0.5 rounded-md text-[11px] font-mono bg-slate-800/90 hover:bg-emerald-500 hover:text-slate-950 text-slate-200 border border-slate-700 transition" title="Show all ${v.brand} vehicles">${v.brand}</a>
+          `;
+        }
+
+        // Make subtitle Country & Chemistry clickable
+        const subtitleP = card.querySelector('h3 + p');
+        if (subtitleP) {
+          subtitleP.innerHTML = `
+            <a href="?country=${encodeURIComponent(v.country)}#explorer" onclick="filterByTag('country', '${v.country}', event)" class="underline decoration-dotted hover:text-emerald-400" title="Filter by ${v.country}">${v.country}</a>
+            · <a href="?q=${encodeURIComponent(v.chemistry.split(' ')[0])}#explorer" onclick="filterByTag('q', '${v.chemistry.split(' ')[0]}', event)" class="underline decoration-dotted hover:text-cyan-400" title="Filter by ${v.chemistry}">${v.chemistry}</a>
+            · ${v.powerKw} kW (${v.powerHp} hp)
+          `;
+        }
+      });
+    }
+
+    // Reads URL Query Parameters (?brand=BYD, ?cat=Sedans, ?pt=BEV, ?tech=lfp|v2l|arch800, ?country=China, ?q=..., ?leaderboard=..., ?compare=...)
+    // so ANY link clicked on /ev/car-name.html lands on index.html and automatically filters/opens the exact requested view!
+    function handleUrlQueryParams() {
+      const search = window.location.search || '';
+      if (!search) return;
+      const params = new URLSearchParams(search);
+
+      const brand = params.get('brand');
+      const cat = params.get('cat') || params.get('category');
+      const pt = params.get('pt') || params.get('powertrain');
+      const country = params.get('country');
+      const tech = params.get('tech');
+      const q = params.get('q');
+      const lb = params.get('leaderboard');
+      const cmp = params.get('compare');
+
+      if (brand) setBrandFilter(brand);
+      if (cat) setCategoryFilter(cat);
+      if (pt) setPowertrainFilter(pt);
+      if (country) setCountryFilter(country);
+      if (tech && (tech === 'v2l' || tech === 'lfp' || tech === 'arch800')) {
+        if (!appState.techFilters[tech]) toggleTechFilter(tech);
+      }
+      if (q) {
+        const input = document.getElementById('universalSearchInput');
+        if (input) {
+          input.value = q;
+          handleUniversalSearch(q);
+        }
+        appState.keywordFilter = q;
+        applyExplorerFilters();
+      }
+      if (lb) {
+        setLeaderboardTab(lb);
+        setTimeout(function () {
+          const el = document.getElementById('leaderboards');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 120);
+      }
+      if (cmp) {
+        const parts = cmp.split(',').map(function (x) { return x.trim(); }).filter(Boolean);
+        if (parts.length >= 2) {
+          loadPresetBattle(parts[0], parts[1]);
+        }
+      }
+      if (brand || cat || pt || country || tech) {
+        setTimeout(function () {
+          const exp = document.getElementById('explorer');
+          if (exp) exp.scrollIntoView({ behavior: 'smooth' });
+        }, 120);
       }
     }
 
@@ -3021,11 +3228,16 @@
               <a href="${v.slug}" onclick="openVehiclePage('${v.id}', event)" class="font-extrabold text-slate-900 dark:text-white hover:text-emerald-400 block">
                 ${v.name}
               </a>
-              <span class="text-[11px] text-slate-400">${v.brand} (${v.country}) • ${v.category}</span>
+              <div class="text-[11px] text-slate-400 flex flex-wrap items-center gap-1 mt-0.5">
+                <a href="?brand=${encodeURIComponent(v.brand)}#explorer" onclick="filterByTag('brand', '${v.brand}', event)" class="hover:text-emerald-400 underline decoration-dotted">${v.brand}</a>
+                <span>(<a href="?country=${encodeURIComponent(v.country)}#explorer" onclick="filterByTag('country', '${v.country}', event)" class="hover:text-emerald-400 underline decoration-dotted">${v.country}</a>)</span>
+                <span>•</span>
+                <a href="?cat=${encodeURIComponent(v.category)}#explorer" onclick="filterByTag('cat', '${v.category}', event)" class="hover:text-cyan-400 underline decoration-dotted">${v.category}</a>
+              </div>
             </td>
             <td class="py-3.5 px-4">
-              <span class="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">${v.powertrain}</span>
-              <span class="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 font-mono">${v.batteryKwh} kWh • ${v.chemistry.split(' ')[0]}</span>
+              <a href="?pt=${encodeURIComponent(v.powertrain)}#explorer" onclick="filterByTag('pt', '${v.powertrain}', event)" class="inline-block px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-cyan-500/15 hover:bg-cyan-500 hover:text-slate-950 text-cyan-400 border border-cyan-500/30 transition">${v.powertrain}</a>
+              <span class="block text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 font-mono">${v.batteryKwh} kWh • <a href="?q=${encodeURIComponent(v.chemistry.split(' ')[0])}#explorer" onclick="filterByTag('q', '${v.chemistry.split(' ')[0]}', event)" class="hover:text-emerald-400 underline decoration-dotted">${v.chemistry.split(' ')[0]}</a></span>
             </td>
             <td class="py-3.5 px-4 text-right font-mono">
               <div class="font-bold text-emerald-500">${formatDistance(v.realRangeKm)} Real AC</div>
@@ -3522,10 +3734,13 @@
           <div class="flex flex-wrap items-center justify-between gap-4">
             <div>
               <div class="flex flex-wrap items-center gap-2 mb-2">
-                <span class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-emerald-500 text-slate-950">${v.powertrain}</span>
-                <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-800 text-cyan-300 border border-cyan-500/30">${v.category}</span>
-                <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-800 text-slate-300">${v.brand} • ${v.country}</span>
-                <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">✓ Verified OEM Data</span>
+                <a href="?pt=${encodeURIComponent(v.powertrain)}#explorer" onclick="filterByTag('pt', '${v.powertrain}', event)" class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition" title="Explore all ${v.powertrain} vehicles">${v.powertrain}</a>
+                <a href="?cat=${encodeURIComponent(v.category)}#explorer" onclick="filterByTag('cat', '${v.category}', event)" class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 transition" title="Explore all ${v.category}">${v.category}</a>
+                <a href="?brand=${encodeURIComponent(v.brand)}#explorer" onclick="filterByTag('brand', '${v.brand}', event)" class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-800 hover:bg-emerald-500 hover:text-slate-950 text-slate-200 border border-slate-700 transition" title="Explore all ${v.brand} vehicles">${v.brand}</a>
+                <a href="?country=${encodeURIComponent(v.country)}#explorer" onclick="filterByTag('country', '${v.country}', event)" class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-slate-300 border border-slate-700 transition" title="Explore all ${v.country} EVs">${v.country}</a>
+                ${v.lfpBattery ? `<a href="?tech=lfp#explorer" onclick="filterByTag('tech', 'lfp', event)" class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-cyan-400 text-slate-950">LFP Battery</a>` : ''}
+                ${v.arch800v ? `<a href="?tech=arch800#explorer" onclick="filterByTag('tech', 'arch800', event)" class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-amber-400 text-slate-950">800V Architecture</a>` : ''}
+                ${v.v2lSupported ? `<a href="?tech=v2l#explorer" onclick="filterByTag('tech', 'v2l', event)" class="px-2.5 py-1 rounded-md text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">🔌 ${v.v2lKw} kW V2L</a>` : ''}
               </div>
               <h1 class="text-2xl sm:text-4xl font-black tracking-tight">${v.name} — Full Specifications, Real-World Range &amp; Review</h1>
               <p class="text-xs sm:text-sm text-slate-300 mt-2 max-w-3xl">
@@ -3925,6 +4140,7 @@ MANDATORY RULES FOR EVERY GENERATED FILE:
     });
 
     window.addEventListener('DOMContentLoaded', function () {
+      makeStaticCardsClickable();
       populateCalculatorAndBattleSelects();
       refreshStaticCardReadouts();
       runCommuteMatcher();
@@ -3932,6 +4148,7 @@ MANDATORY RULES FOR EVERY GENERATED FILE:
       runCostCalculator();
       renderBattleArena();
       renderCompareDock();
+      handleUrlQueryParams();
     });
   </script>
 </body>
