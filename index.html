@@ -115,9 +115,11 @@
         </span>
         <span class="hidden sm:inline text-slate-400">Static HTML + Sitemap Auto-Builder for <code class="text-cyan-400 font-mono">/ev/*.html</code></span>
       </div>
-      <div class="flex items-center gap-3">
-        <span class="text-slate-400 hidden md:inline">Verified Standards: <strong class="text-slate-200">WLTP · EPA · CLTC · Real-World AC On</strong></span>
-        <button type="button" onclick="openAutomationModal()" class="text-cyan-400 hover:text-cyan-300 font-semibold underline underline-offset-2 flex items-center gap-1">
+      <div class="flex flex-wrap items-center gap-3">
+        <button type="button" id="urlRoutingModeBtn" onclick="toggleUrlRoutingMode()" class="px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-mono text-[11px] hover:bg-cyan-500/25 transition" title="Switch how car links behave in Canvas vs Live GitHub/Cloudflare Site">
+          🔗 Car Links: Auto (Live=/ev/ URL · Canvas=Preview)
+        </button>
+        <button type="button" onclick="openAutomationModal()" class="text-emerald-400 hover:text-emerald-300 font-semibold underline underline-offset-2 flex items-center gap-1">
           <span>⚙️ GitHub Auto-Sync &amp; GEM Code</span>
         </button>
       </div>
@@ -1721,10 +1723,13 @@
         <span>/</span>
         <span id="detailBreadcrumbName" class="text-slate-900 dark:text-white font-bold">Vehicle</span>
       </nav>
-      <div class="flex items-center gap-2">
-        <span id="detailCanonicalUrlBadge" class="text-[11px] font-mono px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-emerald-500">
-          /ev/xiaomi-su7-max.html
-        </span>
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900 border border-emerald-500/40 text-xs font-mono">
+          <span class="text-slate-400">🌐 Separate Page URL:</span>
+          <a id="detailCanonicalUrlBadge" href="https://evcarspec.com/ev/xiaomi-su7-max.html" target="_blank" rel="noopener noreferrer" class="text-emerald-400 font-bold hover:underline">
+            /ev/xiaomi-su7-max.html ↗
+          </a>
+        </div>
         <button type="button" onclick="switchMainView('home', event)" class="px-3.5 py-1.5 rounded-xl bg-slate-900 dark:bg-slate-800 text-white text-xs font-bold hover:bg-emerald-500 hover:text-slate-950 transition">
           ← Back to All EVs
         </button>
@@ -1898,6 +1903,7 @@
     // -------------------------------------------------------------------------
     // 1. VERIFIED VEHICLE DATABASE (Synced with Static HTML Cards)
     // -------------------------------------------------------------------------
+    /* EV_DB_AUTO_SYNC_START */
     const EV_DATABASE = [
       {
         id: 'xiaomi-su7-max',
@@ -2422,6 +2428,8 @@
     ];
 
     // -------------------------------------------------------------------------
+    /* EV_DB_AUTO_SYNC_END */
+
     // 2. POWERTRAIN DNA EXPLAINER DEFINITIONS
     // -------------------------------------------------------------------------
     const POWERTRAIN_DNA_INFO = {
@@ -3440,10 +3448,43 @@
       ];
     }
 
+    function isLiveProductionHost() {
+      const h = (window.location && window.location.hostname) ? window.location.hostname.toLowerCase() : '';
+      return h.indexOf('evcarspec') !== -1 || h.indexOf('pages.dev') !== -1 || h.indexOf('github.io') !== -1;
+    }
+
+    function toggleUrlRoutingMode() {
+      appState.urlMode = appState.urlMode === 'direct' ? 'auto' : 'direct';
+      const btn = document.getElementById('urlRoutingModeBtn');
+      if (btn) {
+        btn.textContent = appState.urlMode === 'direct'
+          ? '🌐 Car Links: Direct New Page URL (/ev/*.html)'
+          : '🔗 Car Links: Auto (Live=/ev/ URL · Canvas=Preview)';
+      }
+      showToast(
+        appState.urlMode === 'direct'
+          ? 'Direct URL Mode ON: Clicking a car opens its separate /ev/*.html URL in a new tab!'
+          : 'Auto Mode ON: Opens /ev/*.html URL on live site, and inline preview inside Canvas!'
+      );
+    }
+
     function openVehiclePage(id, ev) {
-      if (ev && ev.preventDefault) ev.preventDefault();
       const v = EV_DATABASE.find(function (item) { return item.id === id; });
       if (!v) return;
+
+      // On Live GitHub / Cloudflare site (or when Direct URL mode is enabled), open the separate /ev/<car>.html page directly!
+      if (isLiveProductionHost() || appState.urlMode === 'direct') {
+        if (ev && ev.preventDefault) ev.preventDefault();
+        if (isLiveProductionHost()) {
+          window.location.href = v.filePath;
+        } else {
+          window.open(v.slug, '_blank', 'noopener');
+        }
+        return;
+      }
+
+      // Inside Gemini Canvas sandbox (where /ev/*.html files aren't hosted on a server yet), show the in-page preview so it doesn't 404 in Canvas:
+      if (ev && ev.preventDefault) ev.preventDefault();
 
       appState.view = 'detail';
       document.getElementById('homeView').classList.add('hidden');
@@ -3453,7 +3494,14 @@
       document.getElementById('detailBreadcrumbCat').textContent = v.category;
       document.getElementById('detailBreadcrumbPt').textContent = v.powertrain;
       document.getElementById('detailBreadcrumbName').textContent = v.name;
-      document.getElementById('detailCanonicalUrlBadge').textContent = v.filePath;
+      const badgeEl = document.getElementById('detailCanonicalUrlBadge');
+      if (badgeEl) {
+        badgeEl.textContent = v.filePath + ' ↗';
+        badgeEl.setAttribute('href', v.slug);
+      }
+      try {
+        window.location.hash = 'ev/' + v.id;
+      } catch (e) {}
 
       const faqs = buildTenFaqsForVehicle(v);
       const rivals = EV_DATABASE.filter(function (item) {
