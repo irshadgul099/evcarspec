@@ -21,9 +21,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS v3.4.17 -->
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = {
+    if (typeof tailwind !== "undefined") {
+      tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
@@ -44,6 +45,7 @@
         }
       }
     };
+    }
   </script>
 
   <!-- Googlebot Crawlability: Rich JSON-LD Schema (WebSite + ItemList + FAQPage) -->
@@ -88,6 +90,9 @@
   </script>
 
   <style>
+    /* Critical fallback rules so hidden modals never flash or block the page */
+    .hidden { display: none !important; }
+    html.dark body { background-color: #090d16; color: #f1f5f9; }
     /* Custom scrollbars & utility polish */
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: #0f172a; }
@@ -1907,6 +1912,7 @@
     const EV_DATABASE = [
       {
         id: 'xiaomi-su7-max',
+        hasLiveFile: true,
         name: 'Xiaomi SU7 Max AWD',
         brand: 'Xiaomi',
         country: 'China',
@@ -3196,7 +3202,7 @@
       if (!selA || !selB || !tbody || !svg) return;
 
       const a = EV_DATABASE.find(function (v) { return v.id === selA.value; }) || EV_DATABASE[0];
-      const b = EV_DATABASE.find(function (v) { return v.id === selB.value; }) || EV_DATABASE[2];
+      const b = EV_DATABASE.find(function (v) { return v.id === selB.value; }) || EV_DATABASE[1] || EV_DATABASE[0];
 
       if (headA) headA.textContent = a.name;
       if (headB) headB.textContent = b.name;
@@ -3472,8 +3478,9 @@
       const v = EV_DATABASE.find(function (item) { return item.id === id; });
       if (!v) return;
 
-      // On Live GitHub / Cloudflare site (or when Direct URL mode is enabled), open the separate /ev/<car>.html page directly!
-      if (isLiveProductionHost() || appState.urlMode === 'direct') {
+      // If the vehicle's HTML file exists in /ev/ (v.hasLiveFile) and we are on the live site (or Direct URL mode), open /ev/<car>.html directly!
+      // If the file hasn't been created in /ev/ yet, open the in-page spec view so the user never hits a 404 error!
+      if ((isLiveProductionHost() && v.hasLiveFile) || appState.urlMode === 'direct') {
         if (ev && ev.preventDefault) ev.preventDefault();
         if (isLiveProductionHost()) {
           window.location.href = v.filePath;
