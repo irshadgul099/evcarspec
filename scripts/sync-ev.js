@@ -21,6 +21,7 @@ for (const file of files) {
   if (match) {
     try {
       const data = JSON.parse(match[1].trim());
+      data.hasLiveFile = true;
       data.filePath = '/ev/' + file;
       data.slug = 'https://evcarspec.com/ev/' + file;
       uploadedVehicles.push(data);
@@ -31,6 +32,7 @@ for (const file of files) {
 }
 
 function buildStaticCardHtml(v) {
+  const pct = Math.min(96, Math.max(40, Math.round((Number(v.realRangeKm) / Math.max(1, Number(v.claimedRangeKm))) * 100)));
   return `
         <!-- Auto-Synced Static Card: ${v.name} -->
         <article data-ev-id="${v.id}" data-category="${v.category}" data-powertrain="${v.powertrain}" data-v2l="${Boolean(v.v2lSupported)}" data-lfp="${Boolean(v.lfpBattery)}" data-arch800="${Boolean(v.arch800v)}" class="ev-card group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-emerald-500/70 shadow-sm hover:shadow-xl transition-all duration-200 flex flex-col justify-between overflow-hidden">
@@ -64,6 +66,9 @@ function buildStaticCardHtml(v) {
                   <span class="primary-range-readout text-2xl font-black font-mono text-slate-900 dark:text-white" data-claimed-km="${v.claimedRangeKm}" data-real-km="${v.realRangeKm}">${v.realRangeKm} km</span>
                   <span class="text-xs text-slate-500 dark:text-slate-400">Battery: <strong>${v.batteryKwh} kWh</strong></span>
                 </div>
+                <div class="w-full h-2 rounded-full bg-slate-200 dark:bg-slate-800 mt-2 overflow-hidden">
+                  <div class="range-bar-fill h-full rounded-full bg-gradient-to-r from-emerald-500 to-cyan-400" style="width: ${pct}%"></div>
+                </div>
               </div>
               <div class="grid grid-cols-2 gap-2 text-xs">
                 <div class="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950/70 border border-slate-200/70 dark:border-slate-800">
@@ -96,12 +101,10 @@ function buildStaticCardHtml(v) {
 if (uploadedVehicles.length > 0 && fs.existsSync(INDEX_PATH)) {
   let indexHtml = fs.readFileSync(INDEX_PATH, 'utf8');
   for (const v of uploadedVehicles) {
-    // 1. Inject Static HTML Card for Googlebot if not already present
     if (!indexHtml.includes(`data-ev-id="${v.id}"`)) {
       const cardMarkup = buildStaticCardHtml(v);
       indexHtml = indexHtml.replace('<!-- EV_STATIC_CARDS_START -->', '<!-- EV_STATIC_CARDS_START -->\n' + cardMarkup);
     }
-    // 2. Inject into EV_DATABASE JS array so Top 10 Leaderboards, Search & VS Arena update automatically
     if (!indexHtml.includes(`id: '${v.id}'`) && !indexHtml.includes(`"id": "${v.id}"`)) {
       const jsEntry = '      ' + JSON.stringify(v, null, 2).replace(/\n/g, '\n      ') + ',\n';
       indexHtml = indexHtml.replace('const EV_DATABASE = [\n', 'const EV_DATABASE = [\n' + jsEntry);
@@ -110,16 +113,19 @@ if (uploadedVehicles.length > 0 && fs.existsSync(INDEX_PATH)) {
   fs.writeFileSync(INDEX_PATH, indexHtml, 'utf8');
 }
 
-// 3. Rebuild sitemap.xml and robots.txt automatically
 const today = new Date().toISOString().split('T')[0];
 const urls = [
   `  <url><loc>https://evcarspec.com/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>`,
-  ...uploadedVehicles.map(v => `  <url><loc>${v.slug}</loc><lastmod>${v.updatedAt || today}</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>`)
+  `  <url><loc>https://evcarspec.com/about/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.60</priority></url>`,
+  `  <url><loc>https://evcarspec.com/contact/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.60</priority></url>`,
+  `  <url><loc>https://evcarspec.com/privacy-policy/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.50</priority></url>`,
+  `  <url><loc>https://evcarspec.com/terms/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.50</priority></url>`,
+  ...uploadedVehicles.map(v => `  <url><loc>${v.slug}</loc><lastmod>${v.updatedAt || today}</lastmod><changefreq>weekly</changefreq><priority>0.90</priority></url>`)
 ];
 
 const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`;
 fs.writeFileSync(SITEMAP_PATH, sitemapContent, 'utf8');
 
-const robotsContent = `User-agent: *\nAllow: /\nSitemap: https://evcarspec.com/sitemap.xml\n`;
+const robotsContent = `User-agent: *\nAllow: /\nDisallow:\n\nSitemap: https://evcarspec.com/sitemap.xml\n`;
 fs.writeFileSync(ROBOTS_PATH, robotsContent, 'utf8');
-console.log('Synced', uploadedVehicles.length, 'vehicles into static index.html, EV_DATABASE, and sitemap.xml.');
+console.log('Successfully synced', uploadedVehicles.length, 'real vehicle(s) from /ev/ into index.html and sitemap.xml.');
